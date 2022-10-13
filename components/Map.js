@@ -24,7 +24,22 @@ const Map = () => {
 	})
 
 	return (
-		<Box sx={{ margin: '0', height: '100vh', width: '100vw' }}>
+		<Box
+			sx={{
+				margin: '0',
+				height: '100vh',
+				width: '100vw',
+				position: 'relative',
+			}}>
+			<Box
+				sx={{
+					height: '100%',
+					width: '100%',
+					background: 'rgba(0,0,0,0.5)',
+					zIndex: 10,
+					position: 'absolute',
+					top: 0,
+				}}></Box>
 			<Wrapper apiKey={API_KEY} render={render}>
 				<MyMapComponent zoom={12} style={style} center={center} />
 			</Wrapper>
