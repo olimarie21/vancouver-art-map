@@ -1,64 +1,8 @@
-import axios from 'axios'
-import { useState, useEffect, useRef } from 'react'
-import { Box } from '@mui/material'
-import { Wrapper, Status } from '@googlemaps/react-wrapper'
+import React, { useEffect, useRef } from 'react'
 
-const API_KEY = process.env.MAPS_API_KEY
-const render = (status) => {
-	switch (status) {
-		case Status.LOADING:
-			return <h2>Loading</h2>
-		case Status.FAILURE:
-			return console.log('error')
-		case Status.SUCCESS:
-			return <MyMapComponent />
-	}
-}
-
-const Map = () => {
-	const [locations, setLocations] = useState([])
-	const [loaded, setLoaded] = useState(false)
-	const [userLocation, setUserLocation] = useState({
-		lat: 49.28452841265043,
-		lng: -123.13040950170381,
-	})
-
-	return (
-		<Box
-			sx={{
-				margin: '0',
-				height: '100vh',
-				width: '100vw',
-				position: 'relative',
-			}}>
-			<Box
-				sx={{
-					height: '100%',
-					width: '100%',
-					background: 'rgba(0,0,0,0.5)',
-					zIndex: 10,
-					position: 'absolute',
-					top: 0,
-				}}></Box>
-			<Wrapper apiKey={API_KEY} render={render}>
-				<MyMapComponent zoom={12} style={style} center={center} />
-			</Wrapper>
-		</Box>
-	)
-}
-
-const center = {
-	lat: 49.28452841265043,
-	lng: -123.13040950170381,
-}
-
-const style = {
-	width: '100%',
-	height: '100%',
-}
-
-function MyMapComponent({ center, zoom, style }) {
+function Map({ center, zoom, style, children }) {
 	const ref = useRef()
+	//   const [map, setMap] = useState(<google.maps.Map>);
 
 	useEffect(() => {
 		new window.google.maps.Map(ref.current, {
@@ -68,7 +12,17 @@ function MyMapComponent({ center, zoom, style }) {
 		})
 	})
 
-	return <div ref={ref} id='map' style={style} />
+	return (
+		<>
+			<div ref={ref} id='map' style={style} />
+			{React.Children.map(children, (child) => {
+				if (React.isValidElement(child)) {
+					// set the map prop on the child component
+					return React.cloneElement(child, { map })
+				}
+			})}
+		</>
+	)
 }
 
 export default Map
