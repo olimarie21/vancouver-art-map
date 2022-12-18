@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import MapDisplay from '../components/MapDisplay'
 import { Box, Container } from '@mui/material'
+import MapWrapper from '../components/MapWrapper'
 
 export default function Home() {
 	return (
@@ -11,7 +11,7 @@ export default function Home() {
 				<link rel='icon' href='/favicon.ico' />
 				<meta name='viewport' content='initial-scale=1, width=device-width' />
 			</Head>
-			<MapDisplay />
+			<MapWrapper />
 		</Box>
 	)
 }
