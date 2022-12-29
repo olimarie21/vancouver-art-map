@@ -1,6 +1,8 @@
 import * as React from 'react'
+import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 import { Box } from '@mui/material'
+import { MarkerClusterer } from '@googlemaps/markerclusterer'
 
 const Map = ({ zoom, children }) => {
 	const ref = useRef()
@@ -9,13 +11,14 @@ const Map = ({ zoom, children }) => {
 		lng: -123.13040950170381,
 	})
 	const [map, setMap] = useState()
+	const [locations, setLocations] = useState(null)
 
 	useEffect(() => {
 		const showPosition = (position) => {
-			// setCenter({
-			// 	lat: position.coords.latitude,
-			// 	lng: position.coords.longitude,
-			// })
+			setCenter({
+				lat: position.coords.latitude,
+				lng: position.coords.longitude,
+			})
 		}
 
 		const getLocation = () => {
@@ -30,13 +33,73 @@ const Map = ({ zoom, children }) => {
 	}, [])
 
 	useEffect(() => {
+		const getArt = () => {
+			axios
+				.get(
+					'https://opendata.vancouver.ca/api/records/1.0/search/?dataset=public-art&q=&rows=200&refine.status=In+place&refine.fields=geom'
+				)
+				.then((res) => {
+					let results = res.data.records.filter(
+						(local) => local.fields.geom !== undefined
+					)
+					setLocations(results)
+
+					const markers = results.map((location, idx) => {
+						return new google.maps.Marker({
+							key: idx,
+							position: {
+								lat: location.fields.geom.coordinates[1],
+								lng: location.fields.geom.coordinates[0],
+							},
+							icon: {
+								url: 'https://res.cloudinary.com/scave2021/image/upload/v1671313452/art_icon_hqhooz.png',
+								scaledSize: new google.maps.Size(24, 24),
+							},
+						})
+					})
+
+					const renderer = {
+						render: ({ count, position }) =>
+							new google.maps.Marker({
+								label: {
+									text: String(count),
+									color: 'white',
+									fontSize: '12px',
+									className: 'marker-label',
+									fontWeight: 'bold',
+								},
+								position,
+								icon: {
+									url: 'https://res.cloudinary.com/scave2021/image/upload/v1672347825/art_icon_purple_pnqntp.png',
+									scaledSize: new google.maps.Size(35, 35),
+								},
+							}),
+					}
+
+					new MarkerClusterer({
+						map,
+						markers,
+						renderer,
+					})
+				})
+				.catch((err) => {
+					console.log('err', err)
+				})
+		}
+
+		getArt()
+		console.log('art loaded')
+	}, [map])
+
+	useEffect(() => {
 		setMap(
 			new window.google.maps.Map(ref.current, {
 				center,
-				zoom,
+				zoom: 14,
 				styles,
 			})
 		)
+		console.log('map loaded')
 	}, [ref, center, zoom])
 
 	return (

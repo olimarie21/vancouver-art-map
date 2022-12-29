@@ -1,5 +1,5 @@
 import { Wrapper, Status } from '@googlemaps/react-wrapper'
-import MapDisplay from './MapDisplay'
+import Map from './Map'
 
 const render = (status) => {
 	switch (status) {
@@ -8,7 +8,7 @@ const render = (status) => {
 		case Status.FAILURE:
 			return <h2>Map unavailable...</h2>
 		case Status.SUCCESS:
-			return <MapDisplay />
+			return <Map />
 	}
 }
 
