@@ -27,7 +27,7 @@ theme.typography.h1 = {
 }
 
 theme.typography.h2 = {
-	fontSize: '1.75rem',
+	fontSize: '1.5rem',
 	fontWeight: '800',
 }
 
@@ -46,4 +46,13 @@ theme.typography.body1 = {
 	fontWeight: '400',
 }
 
+theme.typography.body2 = {
+	fontSize: '.85rem',
+	fontWeight: '400',
+}
+
+theme.typography.button = {
+	fontSize: '1rem',
+	fontWeight: '600',
+}
 export default theme
