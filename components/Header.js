@@ -1,10 +1,10 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 const Header = () => {
 	return (
 		<Container>
-			<H1>Vancouver Public Art</H1>
+			<H1 variant='h1'>Vancouver Public Art</H1>
 		</Container>
 	)
 }
@@ -28,7 +28,7 @@ const Container = styled(Box)(
 `
 )
 
-const H1 = styled('h1')(
+const H1 = styled(Typography)(
 	({ theme }) => `
 	margin: 0;
 	padding: 1rem 3rem;
