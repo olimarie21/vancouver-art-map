@@ -2,6 +2,7 @@ import { styled } from '@mui/material/styles'
 import { Box, Button, IconButton, Typography } from '@mui/material'
 import { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
+import { Stack } from '@mui/system'
 
 const DetailModal = (props) => {
 	const { art, artistName, closeModal } = props
@@ -13,7 +14,7 @@ const DetailModal = (props) => {
 	}
 
 	return (
-		<Container>
+		<Container spacing={1}>
 			<IconButton
 				id='closeBtn'
 				color='secondary'
@@ -41,7 +42,7 @@ const DetailModal = (props) => {
 				<strong>Primary Material: </strong>
 				{art.fields.primarymaterial || 'Unknown'}
 			</Typography>
-			<Typography variant='body1'>
+			<Typography id='description' variant='body1'>
 				{decodeHTML(
 					art.fields.descriptionofwork != undefined
 						? art.fields.descriptionofwork
@@ -59,27 +60,26 @@ const DetailModal = (props) => {
 	)
 }
 
-const Container = styled(Box)(
+const Container = styled(Stack)(
 	({ theme }) => `
 		margin: 0;
 		padding: 3rem;
         position: fixed;
-        top: 50%;
-        right: 50%;
-		transform: translate(50%, -50%);
+        bottom: 0;
+        left: 0;
+		// transform: translate(50%, -50%);
 		height: auto;
 		max-height: 100%;
-		width: auto;
-		max-width: 600px;
+		width: 90%;
+		max-width: 500px;
     	font-family: ${theme.typography.fontFamily};
         z-index: 100;
 		background: ${theme.palette.primary.main};
 		color: ${theme.palette.text.light};
-		border-radius: 2rem;
-
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
+		border-radius: 0 2rem 0 0;
+		@media screen and (min-width: 600px) {
+			max-height: 550px;
+		}
 
 		#closeBtn {
 			position: absolute;
@@ -91,7 +91,7 @@ const Container = styled(Box)(
 		#learnMoreBtn {
     		font-family: ${theme.typography.fontFamily};
 			align-self: start;
-			margin-top: 2%;	
+			margin-top: 4%;	
 		}
 
 		#locationDesc {
@@ -101,9 +101,34 @@ const Container = styled(Box)(
 
 		#h2 {
 			margin-bottom: 0;
-			// padding-bottom: 0;
 		}
-;
+
+		#description {
+			max-height: 300px;
+			overflow: auto;
+
+			::-webkit-scrollbar {
+				width: .75rem;
+			}
+
+			/* Track */
+			::-webkit-scrollbar-track {
+				background: ${theme.palette.text.light}; 
+			}
+				
+			/* Handle */
+			::-webkit-scrollbar-thumb {
+				background: ${theme.palette.primary.light}; 
+
+			}
+
+			/* Handle on hover */
+			::-webkit-scrollbar-thumb:hover {
+				background: ${theme.palette.primary.transparency}; 
+			}
+		}
+
+
 `
 )
 
