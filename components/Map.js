@@ -6,7 +6,8 @@ import { MarkerClusterer } from '@googlemaps/markerclusterer'
 import { styled } from '@mui/material/styles'
 import styles from '../styles/mapStyles'
 
-const Map = ({ zoom, children }) => {
+const Map = ({ zoom, children, artPopup }) => {
+	// const { artPopup } = props
 	const ref = useRef()
 	const [center, setCenter] = useState({
 		lat: 49.28452841265043,
@@ -62,39 +63,11 @@ const Map = ({ zoom, children }) => {
 							},
 						})
 
-						marker.addListener('click', (e) => {
+						marker.addListener('click', () => {
 							let infowindow
 							console.log('location', location)
-							// axios
-							// 	.get(
-							// 		`https://opendata.vancouver.ca/api/records/1.0/search/?dataset=public-art-artists&q=&refine.artistid=${location.fields.artists}`
-							// 	)
-							// 	.then((res) => {
-							// 		console.log(res.data.records)
-							// 		res.data.records != []
-							// 			? setArtist(
-							// 					res.data.records[0].fields.firstname +
-							// 						' ' +
-							// 						res.data.records[0].fields.lastname
-							// 			  )
-							// 			: setArtist('Artist Unknown')
-							// 		console.log(artist)
-							// 	})
-							// 	.then(() => {})
-							// 	.catch((err) => console.log(err))
-							infowindow = new google.maps.InfoWindow({
-								content: `<div class='artModal'>
-										<h2>${location.fields.sitename || 'Title Unknown'}</h2>
-										<h3>Artist Name</h3>
-										<h3>${location.fields.type}</h3>
-										<p>${location.fields.descriptionofwork || 'Details not found.'}</p>
-										<a href=${location.fields.url}>Learn more</a>
-										</div>`,
-							})
-							infowindow.open({
-								anchor: marker,
-								map,
-							})
+
+							artPopup(location)
 						})
 						return marker
 					})
