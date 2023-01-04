@@ -50,9 +50,10 @@ const Map = () => {
 						},
 					})
 					marker.addListener('click', () => {
-						console.log('location', location)
-
-						artPopup(location)
+						map.panTo(marker.getPosition())
+						window.setTimeout(() => {
+							artPopup(location)
+						}, 300)
 					})
 
 					return marker
@@ -108,27 +109,25 @@ const Map = () => {
 				)
 				.then((res) => {
 					if (res.data.records != []) {
-						if (
-							res.data.records[0].fields.firstname != undefined &&
-							res.data.records[0].fields.lastname != undefined
-						) {
-							names.push(
-								res.data.records[0].fields.firstname +
-									' ' +
-									res.data.records[0].fields.lastname
-							)
-						} else if (
-							res.data.records[0].fields.firstname != undefined &&
-							res.data.records[0].fields.lastname == undefined
-						) {
-							names.push(res.data.records[0].fields.firstname)
-						} else if (
-							res.data.records[0].fields.lastname != undefined &&
-							res.data.records[0].fields.firstname == undefined
-						) {
-							names.push(res.data.records[0].fields.lastname)
-						} else {
-							setArtistName(['Artist Name Unavailable'])
+						const name =
+							res.data.records[0].fields.firstname +
+							' ' +
+							res.data.records[0].fields.lastname
+
+						switch (true) {
+							case !name.includes('undefined'):
+								names.push(
+									res.data.records[0].fields.firstname +
+										' ' +
+										res.data.records[0].fields.lastname
+								)
+								break
+							case name.includes('undefined'):
+								names.push(name.replace('undefined', ''))
+
+								break
+							default:
+								setArtistName(['Artist Name Unavailable'])
 						}
 					}
 
