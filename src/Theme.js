@@ -1,6 +1,7 @@
 import { createTheme } from '@mui/material/styles'
 
 const theme = createTheme({
+	root: {},
 	typography: {
 		fontFamily: ['Montserrat', 'sans-serif'],
 	},
@@ -8,6 +9,7 @@ const theme = createTheme({
 		primary: {
 			main: '#1c0028',
 			light: '#c2b2d6',
+			transparency: '#1c002850',
 		},
 		secondary: {
 			main: '#c2b2d6',
