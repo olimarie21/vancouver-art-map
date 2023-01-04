@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { Box } from '@mui/material'
-import MapWrapper from '../components/MapWrapper'
 import Header from '../components/Header'
+import Map from '../components/Map'
 
 export default function Home() {
 	return (
@@ -20,7 +20,7 @@ export default function Home() {
 				<meta name='viewport' content='initial-scale=1, width=device-width' />
 			</Head>
 			<Header />
-			<MapWrapper />
+			<Map />
 		</Box>
 	)
 }

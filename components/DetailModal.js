@@ -1,11 +1,15 @@
 import { styled } from '@mui/material/styles'
 import { Box, Button, IconButton, Typography } from '@mui/material'
-import { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { Stack } from '@mui/system'
 
 const DetailModal = (props) => {
-	const { art, artistName, closeModal } = props
+	const { art, artistName, setShowArt } = props
+	console.log(art)
+
+	const closeModal = () => {
+		setShowArt(false)
+	}
 
 	const decodeHTML = (txt) => {
 		const txtContainer = document.createElement('textarea')
@@ -62,21 +66,20 @@ const DetailModal = (props) => {
 
 const Container = styled(Stack)(
 	({ theme }) => `
+	position: relative;
 		margin: 0;
+		display: flex;
+		flex-direction: column;
 		padding: 3rem;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-		// transform: translate(50%, -50%);
 		height: auto;
 		max-height: 100%;
-		width: 90%;
-		max-width: 500px;
+		min-width: 600px;
+		width: fit-content;
     	font-family: ${theme.typography.fontFamily};
         z-index: 100;
 		background: ${theme.palette.primary.main};
 		color: ${theme.palette.text.light};
-		border-radius: 0 2rem 0 0;
+		border-radius: 0 2rem 2rem 2rem;
 		@media screen and (min-width: 600px) {
 			max-height: 550px;
 		}
