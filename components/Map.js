@@ -62,9 +62,7 @@ const Map = ({ zoom, children, artPopup }) => {
 								scaledSize: new google.maps.Size(34, 34),
 							},
 						})
-
 						marker.addListener('click', () => {
-							let infowindow
 							console.log('location', location)
 
 							artPopup(location)
@@ -111,7 +109,7 @@ const Map = ({ zoom, children, artPopup }) => {
 		setMap(
 			new window.google.maps.Map(ref.current, {
 				center,
-				zoom: 14,
+				zoom: 16,
 				styles,
 			})
 		)
