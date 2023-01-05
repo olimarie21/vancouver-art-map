@@ -14,8 +14,6 @@ const DetailModal = (props) => {
 		setShowDetails(false)
 	}
 
-	const detailsClicked = () => {}
-
 	const decodeHTML = (txt) => {
 		const txtContainer = document.createElement('textarea')
 		txtContainer.innerHTML = txt
