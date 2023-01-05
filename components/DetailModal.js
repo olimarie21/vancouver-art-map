@@ -2,14 +2,19 @@ import { styled } from '@mui/material/styles'
 import { Box, Button, IconButton, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { Stack } from '@mui/system'
+import { useState } from 'react'
+import PlaceIcon from '@mui/icons-material/Place'
 
 const DetailModal = (props) => {
 	const { art, artistName, setShowArt } = props
-	console.log(art)
+	const [showDetails, setShowDetails] = useState(false)
 
 	const closeModal = () => {
 		setShowArt(false)
+		setShowDetails(false)
 	}
+
+	const detailsClicked = () => {}
 
 	const decodeHTML = (txt) => {
 		const txtContainer = document.createElement('textarea')
@@ -18,7 +23,8 @@ const DetailModal = (props) => {
 	}
 
 	return (
-		<Container spacing={1}>
+		<DetailContainer spacing={1}>
+			<Pointer></Pointer>
 			<IconButton
 				id='closeBtn'
 				color='secondary'
@@ -28,13 +34,15 @@ const DetailModal = (props) => {
 			</IconButton>
 			<Box>
 				<Typography id='h2' variant='h2'>
-					Site: {art.fields.sitename}
+					{art.fields.sitename}
 				</Typography>
-				<Typography variant='body2' id='locationDesc'>
-					<strong>Location on site:</strong> {art.fields.locationonsite}
-				</Typography>
+				{art.fields.locationonsite != undefined ? (
+					<Typography variant='body2' id='locationDesc'>
+						{art.fields.locationonsite}
+					</Typography>
+				) : null}
 			</Box>
-			<Typography variant='h3'>
+			<Typography variant='h4'>
 				<strong>Artist(s): </strong>
 				{artistName.join(', ')}
 			</Typography>
@@ -46,48 +54,70 @@ const DetailModal = (props) => {
 				<strong>Primary Material: </strong>
 				{art.fields.primarymaterial || 'Unknown'}
 			</Typography>
-			<Typography id='description' variant='body1'>
-				{decodeHTML(
-					art.fields.descriptionofwork != undefined
-						? art.fields.descriptionofwork
-						: art.fields.artistprojectstatement
-				) || 'Details not found.'}
-			</Typography>
+			{showDetails ? (
+				<Typography id='description' variant='body1'>
+					{decodeHTML(
+						art.fields.descriptionofwork != undefined
+							? art.fields.descriptionofwork
+							: art.fields.artistprojectstatement
+					) || 'Details not found.'}
+				</Typography>
+			) : null}
 			<Button
 				color='secondary'
 				id='learnMoreBtn'
 				variant='contained'
-				href={art.fields.url}>
-				Learn more
+				onClick={() => setShowDetails(!showDetails)}>
+				{showDetails ? 'Hide details' : 'More details'}
 			</Button>
-		</Container>
+		</DetailContainer>
 	)
 }
 
-const Container = styled(Stack)(
+const Pointer = styled('div')(
+	({ theme }) => `
+		margin: 0;
+		position: absolute;
+		top: -1.8rem;
+		right: 50%;
+		transform: translateX(50%);
+		padding: 0;
+		height: 0;
+		width: 0;
+		border-style: solid;
+		background-color: transparent;
+		border-left-color: transparent;
+		border-right-color: transparent;
+		border-width: 0 2.5rem 2rem 2.5rem;
+		border-bottom-color: ${theme.palette.primary.main};
+		`
+)
+
+const DetailContainer = styled(Stack)(
 	({ theme }) => `
 	position: relative;
 		margin: 0;
-		display: flex;
+		margin-top: 2rem;
 		flex-direction: column;
-		padding: 3rem;
-		height: auto;
-		max-height: 100%;
-		min-width: 600px;
-		width: fit-content;
+		padding: 2rem;
+		height: fit-content;
+		max-height: 60vh;
+		width: 90vw;
+		z-index: 1000;
+		transform: translate(-50%, 1%);
     	font-family: ${theme.typography.fontFamily};
-        z-index: 100;
 		background: ${theme.palette.primary.main};
 		color: ${theme.palette.text.light};
-		border-radius: 0 2rem 2rem 2rem;
+		border-radius: 2rem;
 		@media screen and (min-width: 600px) {
-			max-height: 550px;
+			max-width: 550px;
+			max-height: 500px;
 		}
 
 		#closeBtn {
 			position: absolute;
-			top: 4%; 
-			right: 4%;
+			top: 2%; 
+			right: 2%;
 			margin: 0 0 2% 2%;
 		}
 
@@ -129,10 +159,7 @@ const Container = styled(Stack)(
 			::-webkit-scrollbar-thumb:hover {
 				background: ${theme.palette.primary.transparency}; 
 			}
-		}
-
-
-`
+		}		`
 )
 
 export default DetailModal

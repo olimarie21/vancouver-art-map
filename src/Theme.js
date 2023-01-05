@@ -44,7 +44,7 @@ theme.typography.h4 = {
 }
 
 theme.typography.body1 = {
-	fontSize: '1rem',
+	fontSize: '.85rem',
 	fontWeight: '400',
 }
 
@@ -54,7 +54,7 @@ theme.typography.body2 = {
 }
 
 theme.typography.button = {
-	fontSize: '1rem',
+	fontSize: '.95rem',
 	fontWeight: '600',
 }
 export default theme

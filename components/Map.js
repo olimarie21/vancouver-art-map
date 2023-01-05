@@ -149,7 +149,11 @@ const Map = () => {
 				bootstrapURLKeys={{ key: process.env.MAPS_API_KEY }}
 				defaultCenter={defaultProps.center}
 				defaultZoom={defaultProps.zoom}
-				options={{ styles: styles }}
+				options={{
+					styles: styles,
+					clickableIcons: false,
+					disableDefaultUI: true,
+				}}
 				yesIWantToUseGoogleMapApiInternals
 				onGoogleApiLoaded={({ map }) => {
 					getArt(map)
