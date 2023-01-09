@@ -7,16 +7,16 @@ const theme = createTheme({
 	},
 	palette: {
 		primary: {
-			main: '#1c0028',
-			light: '#c2b2d6',
-			transparency: '#1c002850',
+			main: '#000000',
+			light: '#CBCBCB',
+			transparency: '#22222250',
 		},
 		secondary: {
-			main: '#c2b2d6',
+			main: '#F0C3FF',
 		},
 		text: {
-			light: '#e1d6e5',
-			dark: '#1c0028',
+			light: '#ffffff',
+			dark: '#222222',
 		},
 		error: {
 			main: '#c62a2a',
@@ -25,16 +25,18 @@ const theme = createTheme({
 })
 
 theme.typography.h1 = {
-	fontSize: '2.25rem',
+	fontSize: '2rem',
+	fontWeight: '800',
+	lineHeight: '37px',
 }
 
 theme.typography.h2 = {
-	fontSize: '1.5rem',
-	fontWeight: '800',
+	fontSize: '1.4rem',
+	fontWeight: '700',
 }
 
 theme.typography.h3 = {
-	fontSize: '1.25rem',
+	fontSize: '1.2rem',
 	fontWeight: '600',
 }
 
@@ -49,8 +51,9 @@ theme.typography.body1 = {
 }
 
 theme.typography.body2 = {
-	fontSize: '.85rem',
+	fontSize: '.75rem',
 	fontWeight: '400',
+	fontStyle: 'italic',
 }
 
 theme.typography.button = {
