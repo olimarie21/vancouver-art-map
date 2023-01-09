@@ -1,17 +1,16 @@
 import { styled } from '@mui/material/styles'
-import { Box, Button, IconButton, Typography } from '@mui/material'
+import { Button, IconButton, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { Stack } from '@mui/system'
 import { useState } from 'react'
-import PlaceIcon from '@mui/icons-material/Place'
 
 const DetailModal = (props) => {
 	const { art, artistName, setShowArt } = props
 	const [showDetails, setShowDetails] = useState(false)
 
 	const closeModal = () => {
-		setShowArt(false)
 		setShowDetails(false)
+		setShowArt(false)
 	}
 
 	const decodeHTML = (txt) => {
@@ -23,6 +22,7 @@ const DetailModal = (props) => {
 	return (
 		<DetailContainer spacing={1}>
 			<Pointer></Pointer>
+
 			<IconButton
 				id='closeBtn'
 				color='secondary'
@@ -30,43 +30,41 @@ const DetailModal = (props) => {
 				onClick={closeModal}>
 				<CloseIcon />
 			</IconButton>
-			<Box>
+
+			<Stack sx={{ marginBottom: '2%' }}>
 				<Typography id='h2' variant='h2'>
 					{art.fields.sitename}
 				</Typography>
-				{art.fields.locationonsite != undefined ? (
-					<Typography variant='body2' id='locationDesc'>
-						{art.fields.locationonsite}
-					</Typography>
-				) : null}
-			</Box>
-			<Typography variant='h4'>
-				<strong>Artist(s): </strong>
-				{artistName.join(', ')}
-			</Typography>
-			<Typography variant='h4'>
-				<strong>Type: </strong>
-				{art.fields.type}
-			</Typography>
-			<Typography variant='h4'>
-				<strong>Primary Material: </strong>
-				{art.fields.primarymaterial || 'Unknown'}
-			</Typography>
+				<Typography variant='h4'>{art.fields.type}</Typography>
+			</Stack>
+			{art.fields.locationonsite != undefined ? (
+				<Typography variant='body2'>{art.fields.locationonsite}</Typography>
+			) : null}
 			{showDetails ? (
-				<Typography id='description' variant='body1'>
-					{decodeHTML(
-						art.fields.descriptionofwork != undefined
-							? art.fields.descriptionofwork
-							: art.fields.artistprojectstatement
-					) || 'Details not found.'}
-				</Typography>
+				<>
+					<Typography variant='h4'>
+						<strong>Artist(s): </strong>
+						{artistName.join(', ')}
+					</Typography>
+					<Typography variant='h4'>
+						<strong>Primary Material: </strong>
+						{art.fields.primarymaterial || 'Unknown'}
+					</Typography>
+					<Typography id='description' variant='body1'>
+						{decodeHTML(
+							art.fields.descriptionofwork != undefined
+								? art.fields.descriptionofwork
+								: art.fields.artistprojectstatement
+						) || 'Details not found.'}
+					</Typography>
+				</>
 			) : null}
 			<Button
 				color='secondary'
 				id='learnMoreBtn'
 				variant='contained'
 				onClick={() => setShowDetails(!showDetails)}>
-				{showDetails ? 'Hide details' : 'More details'}
+				{showDetails ? 'Hide details' : 'Show details'}
 			</Button>
 		</DetailContainer>
 	)
@@ -106,9 +104,9 @@ const DetailContainer = styled(Stack)(
     	font-family: ${theme.typography.fontFamily};
 		background: ${theme.palette.primary.main};
 		color: ${theme.palette.text.light};
-		border-radius: 2rem;
+		box-shadow: 10px 10px 0px #F0C4FF;
 		@media screen and (min-width: 600px) {
-			max-width: 550px;
+			max-width: 350px;
 			max-height: 500px;
 		}
 
@@ -116,18 +114,17 @@ const DetailContainer = styled(Stack)(
 			position: absolute;
 			top: 2%; 
 			right: 2%;
-			margin: 0 0 2% 2%;
 		}
 
 		#learnMoreBtn {
     		font-family: ${theme.typography.fontFamily};
 			align-self: start;
 			margin-top: 4%;	
+			border-radius: 0;
 		}
 
 		#locationDesc {
-			margin-top: .5%;
-			margin-bottom: 2%
+			margin: 2% 0 0 0;
 		}
 
 		#h2 {
