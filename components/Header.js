@@ -3,36 +3,50 @@ import { styled } from '@mui/material/styles'
 
 const Header = () => {
 	return (
-		<Container>
-			<H1 variant='h1'>Vancouver Public Art</H1>
-		</Container>
+		<Wrapper>
+			<Container>
+				<H1 variant='h1'>Vancouver Public Art</H1>
+			</Container>
+		</Wrapper>
 	)
 }
+
+const Wrapper = styled('div')(
+	({ theme }) => `
+		filter: drop-shadow(0px 10px 0px ${theme.palette.secondary.main});
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 10;
+	`
+)
 
 const Container = styled(Box)(
 	({ theme }) => `
 	margin: 0;
 	padding: 0;
-	height: 10rem;
-    max-width: 90%;
+	height: 8rem;
+	width: 100vw;
+    max-width: 100vw;
 	background: ${theme.palette.primary.main};
 	display: flex;
 	justify-content: start;
-	align-items: center;
+	align-items: start;
     font-family: ${theme.typography.fontFamily};
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    border-radius: 0 0 2rem 0;
+	overflow: hidden;
+	clip-path: polygon(0 0, 100% 0%, 100% 75%, 0 100%);
 `
 )
 
 const H1 = styled(Typography)(
 	({ theme }) => `
 	margin: 0;
-	padding: 1rem 3rem;
+	margin: 1rem 3rem;
+	width: 80%;
 	color: ${theme.palette.text.light};
+	@media screen and (min-width: 600px) {
+		margin: 2.5rem 3rem;
+	}
 `
 )
 
