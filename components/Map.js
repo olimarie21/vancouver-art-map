@@ -45,12 +45,13 @@ const Map = () => {
 							lng: location.fields.geom.coordinates[0],
 						},
 						icon: {
-							url: 'https://res.cloudinary.com/scave2021/image/upload/v1672354802/art_icon_bg_ekpvcp.png',
+							url: 'https://res.cloudinary.com/scave2021/image/upload/v1673306251/art_icon_bg_ruzuqa.png',
 							scaledSize: new google.maps.Size(34, 34),
 						},
 					})
 					marker.addListener('click', () => {
 						map.panTo(marker.getPosition())
+
 						window.setTimeout(() => {
 							artPopup(location)
 						}, 300)
@@ -73,7 +74,7 @@ const Map = () => {
 							animation: google.maps.Animation.DROP,
 							position,
 							icon: {
-								url: 'https://res.cloudinary.com/scave2021/image/upload/v1672355935/art-icon_cluster_x6thbq.png',
+								url: 'https://res.cloudinary.com/scave2021/image/upload/v1673306251/art-icon_cluster_frwdp0.png',
 								scaledSize: new google.maps.Size(40, 40),
 							},
 						}),
@@ -153,6 +154,7 @@ const Map = () => {
 					styles: styles,
 					clickableIcons: false,
 					disableDefaultUI: true,
+					draggable: true,
 				}}
 				yesIWantToUseGoogleMapApiInternals
 				onGoogleApiLoaded={({ map }) => {
