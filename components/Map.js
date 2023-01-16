@@ -1,20 +1,21 @@
 import * as React from 'react'
 import axios from 'axios'
-import { useRef, useState } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Box } from '@mui/material'
 import { MarkerClusterer } from '@googlemaps/markerclusterer'
 import { styled } from '@mui/material/styles'
 import styles from '../styles/mapStyles'
-
+import getDistance from '../utils/calculateDistance'
 import GoogleMapReact from 'google-map-react'
 import DetailModal from './DetailModal'
+import Marker from 'google-map-react'
 
 const Map = () => {
 	const mapRef = useRef()
 	const defaultProps = {
 		center: {
-			lat: 49.28452841265043,
-			lng: -123.13040950170381,
+			lat: 49.277691,
+			lng: -123.117504,
 		},
 		zoom: 16,
 	}
@@ -22,6 +23,45 @@ const Map = () => {
 	const [showArt, setShowArt] = useState(false)
 	const [artItem, setArtItem] = useState()
 	const [artistName, setArtistName] = useState([])
+	const [center, setCenter] = useState()
+
+	// get user location, set as center if within range of City
+	useEffect(() => {
+		const showPosition = (position) => {
+			const distance = getDistance(
+				{
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				},
+				defaultProps.center
+			)
+
+			if (distance < 10) {
+				setCenter({
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				})
+			} else {
+				alert(
+					'It appears that you are outside of the City of Vancouver, currently this map only shows public art within city limits. Feel free to explore the map and visit soon!'
+				)
+				setCenter({
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				})
+			}
+		}
+
+		const getLocation = () => {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(showPosition)
+			} else {
+				alert('Please enable device location to see the nearby art!')
+			}
+		}
+
+		getLocation()
+	}, [])
 
 	const getArt = (map) => {
 		mapRef.current = map
@@ -92,6 +132,10 @@ const Map = () => {
 		console.log('art loaded')
 	}
 
+	useEffect(() => {
+		getArt(mapRef.current)
+	}, [mapRef.current])
+
 	const getArtists = (artists) => {
 		const artistArr = artists.split(';')
 		return artistArr
@@ -150,6 +194,7 @@ const Map = () => {
 				bootstrapURLKeys={{ key: process.env.MAPS_API_KEY }}
 				defaultCenter={defaultProps.center}
 				defaultZoom={defaultProps.zoom}
+				center={center}
 				options={{
 					styles: styles,
 					clickableIcons: false,
@@ -158,7 +203,7 @@ const Map = () => {
 				}}
 				yesIWantToUseGoogleMapApiInternals
 				onGoogleApiLoaded={({ map }) => {
-					getArt(map)
+					mapRef.current = map
 				}}>
 				{showArt ? (
 					<DetailModal
