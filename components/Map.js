@@ -66,7 +66,12 @@ const Map = () => {
 			zoom={zoom}
 			onLoad={onLoad}
 			onUnmount={onUnmount}
-			options={{ styles: styles }}>
+			options={{
+				styles: styles,
+				disableDefaultUI: true,
+				clickableIcons: false,
+				maxWidth: 350,
+			}}>
 			<MarkerClusterer options={mapClusterStyles}>
 				{(clusterer) =>
 					locations.map((location, index) => (

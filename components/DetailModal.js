@@ -89,20 +89,20 @@ const Pointer = styled('div')(
 const DetailContainer = styled(Stack)(
 	({ theme }) => `
 	position: relative;
-		margin: 0;
+		margin: 2%;
 		margin-top: 2rem;
 		flex-direction: column;
 		padding: 2rem;
 		height: fit-content;
-		max-height: 60vh;
-		width: 90vw;
+		// max-height: 80vh;
+		width: 90%;
 		z-index: 1000;
     	font-family: ${theme.typography.fontFamily};
 		background: ${theme.palette.primary.main};
 		color: ${theme.palette.text.light};
 		box-shadow: 10px 10px 0px #F0C4FF;
 		@media screen and (min-width: 600px) {
-			max-width: 350px;
+			width: 350px;
 			max-height: 500px;
 		}
 		.popUpImg {
@@ -132,6 +132,7 @@ const DetailContainer = styled(Stack)(
 
 		#h2 {
 			margin-bottom: 0;
+			margin-right: 1%;
 		}
 
 		#description {
