@@ -3,15 +3,13 @@ import { Button, IconButton, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { Stack } from '@mui/system'
 import { useState } from 'react'
+import Image from 'next/image'
 
 const DetailModal = (props) => {
-	const { art, artistName, setShowArt } = props
+	const { art, setShowArt } = props
 	const [showDetails, setShowDetails] = useState(false)
 
-	const closeModal = () => {
-		setShowDetails(false)
-		setShowArt(false)
-	}
+	console.log(art)
 
 	const decodeHTML = (txt) => {
 		const txtContainer = document.createElement('textarea')
@@ -27,35 +25,34 @@ const DetailModal = (props) => {
 				id='closeBtn'
 				color='secondary'
 				aria-label='close'
-				onClick={closeModal}>
+				onClick={() => setShowArt(false)}>
 				<CloseIcon />
 			</IconButton>
 
 			<Stack sx={{ marginBottom: '2%' }}>
 				<Typography id='h2' variant='h2'>
-					{art.fields.sitename}
+					{art.locationTitle}
 				</Typography>
-				<Typography variant='h4'>{art.fields.type}</Typography>
+				<Typography variant='h4'>{art.type}</Typography>
+				{art.image != '' ? (
+					<img className='popUpImg' src={art.image} alt={art.locationTitle} />
+				) : null}
 			</Stack>
-			{art.fields.locationonsite != undefined ? (
-				<Typography variant='body2'>{art.fields.locationonsite}</Typography>
+			{art.locationDetail != undefined ? (
+				<Typography variant='body2'>{art.locationDetail}</Typography>
 			) : null}
 			{showDetails ? (
 				<>
 					<Typography variant='h4'>
 						<strong>Artist(s): </strong>
-						{artistName.join(', ')}
+						{art.artists.join(', ')}
 					</Typography>
 					<Typography variant='h4'>
 						<strong>Primary Material: </strong>
-						{art.fields.primarymaterial || 'Unknown'}
+						{art.primaryMaterial || 'Unknown'}
 					</Typography>
 					<Typography id='description' variant='body1'>
-						{decodeHTML(
-							art.fields.descriptionofwork != undefined
-								? art.fields.descriptionofwork
-								: art.fields.artistprojectstatement
-						) || 'Details not found.'}
+						{decodeHTML(art.artDescription)}
 					</Typography>
 				</>
 			) : null}
@@ -100,7 +97,6 @@ const DetailContainer = styled(Stack)(
 		max-height: 60vh;
 		width: 90vw;
 		z-index: 1000;
-		transform: translate(-50%, 1%);
     	font-family: ${theme.typography.fontFamily};
 		background: ${theme.palette.primary.main};
 		color: ${theme.palette.text.light};
@@ -108,6 +104,13 @@ const DetailContainer = styled(Stack)(
 		@media screen and (min-width: 600px) {
 			max-width: 350px;
 			max-height: 500px;
+		}
+		.popUpImg {
+			height: auto;
+			max-height: 200px;
+			width: 100%;
+			margin-top: 4%;
+			object-fit: cover;
 		}
 
 		#closeBtn {
