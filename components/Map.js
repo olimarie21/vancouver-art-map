@@ -3,7 +3,6 @@ import {
 	useJsApiLoader,
 	Marker,
 	MarkerClusterer,
-	InfoBox,
 } from '@react-google-maps/api'
 import { useState, useEffect, useCallback } from 'react'
 import styles from '../styles/mapStyles'
@@ -20,19 +19,17 @@ const Map = () => {
 	const [zoom, setZoom] = useState(16)
 	const [map, setMap] = useState(null)
 	const [locations, setLocations] = useState([])
-	const [animation, setAnimation] = useState(null)
 	const [showArt, setShowArt] = useState(false)
 	const [artItem, setArtItem] = useState()
 
-	const containerStyle = {
+	const [containerStyle, setContainerStyle] = useState({
 		width: '100vw',
 		height: '100vh',
-	}
+	})
 
 	useEffect(() => {
 		let isMounted = true
 		axios.get(`${process.env.DB_URL}`).then((res) => {
-			console.log('api called')
 			isMounted ? setLocations(res.data) : null
 		})
 
@@ -51,7 +48,6 @@ const Map = () => {
 
 	const artPopup = (art) => {
 		setArtItem(art)
-		console.log(artItem)
 		setShowArt(true)
 		setCenter({
 			lat: art.geolocation.coordinates[1],
@@ -72,7 +68,10 @@ const Map = () => {
 				clickableIcons: false,
 				maxWidth: 350,
 			}}>
-			<MarkerClusterer options={mapClusterStyles}>
+			<MarkerClusterer
+				options={{
+					styles: mapClusterStyles,
+				}}>
 				{(clusterer) =>
 					locations.map((location, index) => (
 						<Marker
@@ -82,11 +81,22 @@ const Map = () => {
 								lng: location.geolocation.coordinates[0],
 							}}
 							clusterer={clusterer}
-							icon={{
-								url: 'https://res.cloudinary.com/scave2021/image/upload/v1673306251/art_icon_bg_ruzuqa.png',
-								scaledSize: new google.maps.Size(38, 38),
-							}}
-							animation={animation}
+							icon={
+								location === artItem && showArt
+									? {
+											url: 'https://res.cloudinary.com/scave2021/image/upload/v1674620283/alt_art-icon.png',
+											scaledSize: new google.maps.Size(46, 46),
+									  }
+									: {
+											url: 'https://res.cloudinary.com/scave2021/image/upload/v1673306251/art_icon_bg_ruzuqa.png',
+											scaledSize: new google.maps.Size(38, 38),
+									  }
+							}
+							animation={
+								location === artItem && showArt
+									? google.maps.Animation.BOUNCE
+									: null
+							}
 							onClick={() => {
 								artPopup(location)
 							}}
@@ -95,21 +105,8 @@ const Map = () => {
 				}
 			</MarkerClusterer>
 			{showArt ? (
-				<InfoBox
-					// onLoad={onLoad}
-					options={{
-						pixelOffset: new google.maps.Size(-175, 6),
-						closeBoxURL: '',
-						enableEventPropagation: true,
-					}}
-					position={{
-						lat: artItem.geolocation.coordinates[1],
-						lng: artItem.geolocation.coordinates[0],
-					}}>
-					<DetailModal art={artItem} setShowArt={setShowArt} />
-				</InfoBox>
+				<DetailModal showArt={showArt} art={artItem} setShowArt={setShowArt} />
 			) : null}
-			)
 		</GoogleMap>
 	) : (
 		<></>
