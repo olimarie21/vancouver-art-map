@@ -101,7 +101,7 @@ const DetailModal = (props) => {
 const Slider = styled(SwipeableDrawer)(
 	`
 	position: relative;
-	.css-9emuhu-MuiPaper-root-MuiDrawer-paper {
+	.MuiPaper-root {
 		@media screen and (min-width: 600px) {
 			width: 45%;
 			height: 95%;
