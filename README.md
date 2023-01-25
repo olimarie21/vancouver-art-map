@@ -2,6 +2,7 @@
 This project integrates data from the City of Vancouver's Open Data Portal with Google Maps JavaScript API, displaying location based information about outdoor public art within the City of Vancouver. This project is still under development and features are being added.
 
 #### [Demo in progress features](https://vancouver-art-map.vercel.app/)
+#### [View server side repo](https://github.com/olimarie21/van-art-server)
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
