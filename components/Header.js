@@ -18,6 +18,9 @@ const Wrapper = styled('div')(
 		top: 0;
 		left: 0;
 		z-index: 10;
+		@media screen and (min-width: 600px) {
+			z-index: 100000;
+		}
 	`
 )
 
