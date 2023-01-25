@@ -1,15 +1,32 @@
 import { styled } from '@mui/material/styles'
-import { Button, IconButton, Typography } from '@mui/material'
+import {
+	Button,
+	Grid,
+	IconButton,
+	SwipeableDrawer,
+	Typography,
+	Box,
+} from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { Stack } from '@mui/system'
-import { useState } from 'react'
-import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 const DetailModal = (props) => {
-	const { art, setShowArt } = props
+	const { art, setShowArt, showArt } = props
 	const [showDetails, setShowDetails] = useState(false)
 
-	console.log(art)
+	useEffect(() => {
+		const changeToDesktopView = () => {
+			const width = window.innerWidth
+
+			if (width > 600) {
+				setShowDetails(true)
+			}
+		}
+
+		changeToDesktopView()
+		window.addEventListener('resize', changeToDesktopView)
+	}, [])
 
 	const decodeHTML = (txt) => {
 		const txtContainer = document.createElement('textarea')
@@ -18,92 +35,110 @@ const DetailModal = (props) => {
 	}
 
 	return (
-		<DetailContainer spacing={1}>
-			<Pointer></Pointer>
+		<Slider
+			id='drawer'
+			anchor='bottom'
+			open={showArt}
+			onClose={() => setShowArt(false)}
+			onOpen={() => setShowArt(true)}
+			swipeAreaWidth={20}
+			disableSwipeToOpen={false}
+			hideBackdrop={true}
+			ModalProps={{
+				keepMounted: true,
+			}}>
+			<DetailContainer>
+				<IconButton
+					id='closeBtn'
+					color='secondary'
+					aria-label='close'
+					onClick={() => setShowArt(false)}>
+					<CloseIcon />
+				</IconButton>
+				<Stack>
+					<Typography id='h2' variant='h2'>
+						{art.locationTitle}
+					</Typography>
+					<Typography variant='h4'>{art.type}</Typography>
+				</Stack>
 
-			<IconButton
-				id='closeBtn'
-				color='secondary'
-				aria-label='close'
-				onClick={() => setShowArt(false)}>
-				<CloseIcon />
-			</IconButton>
-
-			<Stack sx={{ marginBottom: '2%' }}>
-				<Typography id='h2' variant='h2'>
-					{art.locationTitle}
-				</Typography>
-				<Typography variant='h4'>{art.type}</Typography>
 				{art.image != '' ? (
 					<img className='popUpImg' src={art.image} alt={art.locationTitle} />
 				) : null}
-			</Stack>
-			{art.locationDetail != undefined ? (
-				<Typography variant='body2'>{art.locationDetail}</Typography>
-			) : null}
-			{showDetails ? (
-				<>
-					<Typography variant='h4'>
-						<strong>Artist(s): </strong>
-						{art.artists.join(', ')}
-					</Typography>
-					<Typography variant='h4'>
-						<strong>Primary Material: </strong>
-						{art.primaryMaterial || 'Unknown'}
-					</Typography>
-					<Typography id='description' variant='body1'>
-						{decodeHTML(art.artDescription)}
-					</Typography>
-				</>
-			) : null}
-			<Button
-				color='secondary'
-				id='learnMoreBtn'
-				variant='contained'
-				onClick={() => setShowDetails(!showDetails)}>
-				{showDetails ? 'Hide details' : 'Show details'}
-			</Button>
-		</DetailContainer>
+				{art.locationDetail != undefined ? (
+					<Typography variant='body2'>{art.locationDetail}</Typography>
+				) : null}
+
+				{showDetails ? (
+					<Box display={'grid'} rowGap={'.5rem'}>
+						<Typography variant='h4'>
+							<strong>Artist(s): </strong>
+							{art.artists.join(', ')}
+						</Typography>
+
+						<Typography variant='h4'>
+							<strong>Primary Material: </strong>
+							{art.primaryMaterial || 'Unknown'}
+						</Typography>
+
+						<Typography id='description' variant='body1'>
+							{decodeHTML(art.artDescription)}
+						</Typography>
+					</Box>
+				) : null}
+
+				<Button
+					color='secondary'
+					id='learnMoreBtn'
+					variant='contained'
+					onClick={() => setShowDetails(!showDetails)}>
+					{showDetails ? 'Hide details' : 'Show details'}
+				</Button>
+			</DetailContainer>
+		</Slider>
 	)
 }
-
-const Pointer = styled('div')(
-	({ theme }) => `
-		margin: 0;
-		position: absolute;
-		top: -1.8rem;
-		right: 50%;
-		transform: translateX(50%);
-		padding: 0;
-		height: 0;
-		width: 0;
-		border-style: solid;
-		background-color: transparent;
-		border-left-color: transparent;
-		border-right-color: transparent;
-		border-width: 0 2.5rem 2rem 2.5rem;
-		border-bottom-color: ${theme.palette.primary.main};
-		`
-)
-
-const DetailContainer = styled(Stack)(
-	({ theme }) => `
+const Slider = styled(SwipeableDrawer)(
+	`
 	position: relative;
-		margin: 2%;
-		margin-top: 2rem;
-		flex-direction: column;
-		padding: 2rem;
-		height: fit-content;
-		// max-height: 80vh;
-		width: 90%;
-		z-index: 1000;
+	.css-9emuhu-MuiPaper-root-MuiDrawer-paper {
+		@media screen and (min-width: 600px) {
+			width: 45%;
+			height: 95%;
+			right: 0;
+			margin-left: 55%;
+		}
+		
+		@media screen and (min-width: 1000px) {
+			width: 25%;
+			height: 92%;
+			right: 0;
+			margin-left: 75%;
+		}
+	}
+	`
+)
+const DetailContainer = styled(Box)(
+	({ theme }) => `	
+		display: grid;
+		grid-template-columns: 100%;
+		grid-template-rows: auto;
+
+		position: relative;
+		border-top: 10px solid ${theme.palette.secondary.main};
+		padding: 1.5rem;
+		margin-bottom: 2%;
+		height: 100%;
+		width: 100%;
+		margin: 0;
     	font-family: ${theme.typography.fontFamily};
 		background: ${theme.palette.primary.main};
 		color: ${theme.palette.text.light};
-		box-shadow: 10px 10px 0px #F0C4FF;
+		row-gap: .5rem;
+
 		@media screen and (min-width: 600px) {
-			width: 350px;
-			max-height: 500px;
+			padding-top: 12%;
+			align-content: start;
 		}
 		.popUpImg {
 			height: auto;
@@ -111,33 +146,62 @@ const DetailContainer = styled(Stack)(
 			width: 100%;
 			margin-top: 4%;
 			object-fit: cover;
+			border-bottom: 10px solid ${theme.palette.secondary.main};
+
+			@media screen and (min-width: 600px) {
+				grid-row: 2 / 2;
+				max-height: 300px;
+				margin: 0% 0 4% 0;
+				align-self: start;
+			}
 		}
 
 		#closeBtn {
 			position: absolute;
 			top: 2%; 
 			right: 2%;
+
+			@media screen and (min-width: 600px) {
+				top: 0; 
+				right: 0;
+				position: relative;
+				grid-row: 1 / 2;
+				width: .5rem;
+				height: .5rem;
+			    margin: 8% 4%;
+    			justify-self: end;
+			}
 		}
 
 		#learnMoreBtn {
     		font-family: ${theme.typography.fontFamily};
 			align-self: start;
-			margin-top: 4%;	
 			border-radius: 0;
+
+			@media screen and (min-width: 600px) {
+				margin: 2% 0 0 0;
+				display: none;
+			}
 		}
 
 		#locationDesc {
-			margin: 2% 0 0 0;
+			margin: 0;
 		}
 
 		#h2 {
 			margin-bottom: 0;
-			margin-right: 1%;
+			margin-right: 2%;
 		}
 
 		#description {
-			max-height: 300px;
-			overflow: auto;
+			height: fit-content;
+			max-height: 180px;
+			overflow-x: hidden;
+			margin-bottom: 4%;
+
+			@media screen and (min-width: 600px) {
+				max-height: 300px;
+			}
 
 			::-webkit-scrollbar {
 				width: .75rem;
