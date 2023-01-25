@@ -150,7 +150,6 @@ const DetailContainer = styled(Box)(
 
 			@media screen and (min-width: 600px) {
 				grid-row: 2 / 2;
-				max-height: 300px;
 				margin: 0% 0 4% 0;
 				align-self: start;
 			}
@@ -200,7 +199,7 @@ const DetailContainer = styled(Box)(
 			margin-bottom: 4%;
 
 			@media screen and (min-width: 600px) {
-				max-height: 300px;
+				max-height: 250px;
 			}
 
 			::-webkit-scrollbar {
