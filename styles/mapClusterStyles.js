@@ -6,36 +6,34 @@ const clusterIcon = {
 	fontFamily: 'Montserrat',
 }
 
-const mapClusterStyles = {
-	styles: [
-		{
-			textColor: 'white',
-			url: clusterIcon.url,
-			width: clusterIcon.width,
-			height: clusterIcon.height,
-			textSize: 12,
-			fontWeight: clusterIcon.fontWeight,
-			fontFamily: clusterIcon.fontFamily,
-		},
-		{
-			textColor: 'white',
-			url: clusterIcon.url,
-			width: clusterIcon.width,
-			height: clusterIcon.height,
-			textSize: 12,
-			fontWeight: clusterIcon.fontWeight,
-			fontFamily: clusterIcon.fontFamily,
-		},
-		{
-			textColor: 'white',
-			url: clusterIcon.url,
-			width: clusterIcon.width,
-			height: clusterIcon.height,
-			textSize: 12,
-			fontWeight: clusterIcon.fontWeight,
-			fontFamily: clusterIcon.fontFamily,
-		},
-	],
-}
+const mapClusterStyles = [
+	{
+		textColor: 'white',
+		url: clusterIcon.url,
+		width: clusterIcon.width,
+		height: clusterIcon.height,
+		textSize: 12,
+		fontWeight: clusterIcon.fontWeight,
+		fontFamily: clusterIcon.fontFamily,
+	},
+	{
+		textColor: 'white',
+		url: clusterIcon.url,
+		width: clusterIcon.width,
+		height: clusterIcon.height,
+		textSize: 12,
+		fontWeight: clusterIcon.fontWeight,
+		fontFamily: clusterIcon.fontFamily,
+	},
+	{
+		textColor: 'white',
+		url: clusterIcon.url,
+		width: clusterIcon.width,
+		height: clusterIcon.height,
+		textSize: 12,
+		fontWeight: clusterIcon.fontWeight,
+		fontFamily: clusterIcon.fontFamily,
+	},
+]
 
 export default mapClusterStyles
