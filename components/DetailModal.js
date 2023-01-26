@@ -146,7 +146,7 @@ const DetailContainer = styled(Box)(
 			width: 100%;
 			margin-top: 4%;
 			object-fit: cover;
-			border-bottom: 10px solid ${theme.palette.secondary.main};
+			border-bottom: 5px solid ${theme.palette.secondary.main};
 
 			@media screen and (min-width: 600px) {
 				grid-row: 2 / 2;
