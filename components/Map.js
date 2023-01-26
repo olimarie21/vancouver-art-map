@@ -99,6 +99,7 @@ const Map = () => {
 							}
 							onClick={() => {
 								artPopup(location)
+								zoom < 16 ? setZoom(16) : null
 							}}
 						/>
 					))
