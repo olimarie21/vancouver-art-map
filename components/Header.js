@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles'
 
 const Header = () => {
 	return (
-		<Wrapper>
+		<Wrapper data-testid='header'>
 			<Container>
 				<H1 variant='h1'>Vancouver Public Art</H1>
 			</Container>
