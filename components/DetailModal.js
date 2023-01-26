@@ -110,6 +110,11 @@ const Slider = styled(SwipeableDrawer)(
 		}
 		
 		@media screen and (min-width: 1000px) {
+			width: 35%;
+			margin-left: 65%;
+		}
+
+		@media screen and (min-width: 1400px) {
 			width: 25%;
 			height: 92%;
 			right: 0;
