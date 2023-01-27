@@ -3,23 +3,42 @@ import { styled } from '@mui/material/styles'
 
 const Header = () => {
 	return (
-		<Wrapper data-testid='header'>
-			<Container>
-				<H1 variant='h1'>Vancouver Public Art</H1>
-			</Container>
-		</Wrapper>
+		<>
+			<Wrapper data-testid='header'>
+				<Container>
+					<H1 variant='h1'>Vancouver Public Art</H1>
+				</Container>
+			</Wrapper>
+			<Accent id='headerAccent'></Accent>
+		</>
 	)
 }
 
 const Wrapper = styled('div')(
 	({ theme }) => `
-		filter: drop-shadow(0px 10px 0px ${theme.palette.secondary.main});
+		// filter: drop-shadow(0px 10px 0px ${theme.palette.secondary.main});
 		position: fixed;
 		top: 0;
 		left: 0;
 		z-index: 10;
 		@media screen and (min-width: 600px) {
 			z-index: 100000;
+		}
+		`
+)
+const Accent = styled('div')(
+	({ theme }) => `
+		height: 8rem;
+		background: ${theme.palette.secondary.main};
+		width: 100%;
+		clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 9;
+		
+		@media screen and (min-width: 600px) {
+			z-index: 10000;
 		}
 	`
 )
