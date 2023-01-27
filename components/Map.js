@@ -49,10 +49,10 @@ const Map = () => {
 	const artPopup = (art) => {
 		setArtItem(art)
 		setShowArt(true)
-		setCenter({
-			lat: art.geolocation.coordinates[1],
-			lng: art.geolocation.coordinates[0],
-		})
+		// setCenter({
+		// 	lat: art.geolocation.coordinates[1],
+		// 	lng: art.geolocation.coordinates[0],
+		// })
 	}
 
 	return isLoaded ? (
@@ -100,6 +100,10 @@ const Map = () => {
 							onClick={() => {
 								artPopup(location)
 								zoom < 16 ? setZoom(16) : null
+								map.panTo({
+									lat: location.geolocation.coordinates[1],
+									lng: location.geolocation.coordinates[0],
+								})
 							}}
 						/>
 					))
