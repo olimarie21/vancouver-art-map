@@ -49,6 +49,7 @@ const DetailModal = (props) => {
 			ModalProps={{
 				keepMounted: true,
 			}}>
+			<Accent />
 			<DetailContainer>
 				<IconButton
 					id='closeBtn'
@@ -104,6 +105,7 @@ const Slider = styled(SwipeableDrawer)(
 	`
 	position: relative;
 	.MuiPaper-root {
+		background: transparent;
 		@media screen and (min-width: 600px) {
 			width: 45%;
 			height: 95%;
@@ -125,15 +127,29 @@ const Slider = styled(SwipeableDrawer)(
 	}
 	`
 )
+
+const Accent = styled('div')(
+	({ theme }) => `
+		height: 8rem;
+		background: ${theme.palette.secondary.main};
+		width: 100%;
+		clip-path: polygon(0 0, 100% 10%, 100% 100%, 0% 100%);
+		position: fixed;
+		
+		@media screen and (min-width: 600px) {
+			display: none;
+		}
+	`
+)
+
 const DetailContainer = styled(Box)(
 	({ theme }) => `	
 		display: grid;
 		grid-template-columns: 100%;
 		grid-template-rows: auto;
-
+		clip-path: polygon(0 7%, 100% 0, 100% 100%, 0% 100%);
 		position: relative;
-		border-top: 10px solid ${theme.palette.secondary.main};
-		padding: 1.5rem;
+		padding: 3rem 1.5rem 1.5rem 1.5rem;
 		margin-bottom: 2%;
 		height: 100%;
 		width: 100%;
@@ -146,6 +162,7 @@ const DetailContainer = styled(Box)(
 		@media screen and (min-width: 600px) {
 			padding-top: 20%;
 			align-content: start;
+			clip-path: none;
 		}
 
 		@media screen and (min-width: 1200px) {
@@ -159,7 +176,7 @@ const DetailContainer = styled(Box)(
 			width: 100%;
 			margin-top: 4%;
 			object-fit: cover;
-			border-bottom: 5px solid ${theme.palette.secondary.main};
+			border-bottom: 4px solid ${theme.palette.secondary.main};
 
 			@media screen and (min-width: 600px) {
 				grid-row: 2 / 2;
@@ -170,7 +187,7 @@ const DetailContainer = styled(Box)(
 
 		#closeBtn {
 			position: absolute;
-			top: 2%; 
+			top: 4%; 
 			right: 2%;
 
 			@media screen and (min-width: 600px) {
