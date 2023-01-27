@@ -15,6 +15,8 @@ const DetailModal = (props) => {
 	const { art, setShowArt, showArt } = props
 	const [showDetails, setShowDetails] = useState(false)
 
+	console.log(art)
+
 	useEffect(() => {
 		const changeToDesktopView = () => {
 			const width = window.innerWidth
@@ -142,9 +144,15 @@ const DetailContainer = styled(Box)(
 		row-gap: .5rem;
 
 		@media screen and (min-width: 600px) {
-			padding-top: 12%;
+			padding-top: 20%;
 			align-content: start;
 		}
+
+		@media screen and (min-width: 1200px) {
+			padding-top: 14%;
+			align-content: start;
+		}
+
 		.popUpImg {
 			height: auto;
 			max-height: 200px;
