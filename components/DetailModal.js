@@ -10,6 +10,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close'
 import { Stack } from '@mui/system'
 import { useEffect, useState } from 'react'
+import RoomIcon from '@mui/icons-material/Room'
 
 const DetailModal = (props) => {
 	const { art, setShowArt, showArt } = props
@@ -69,7 +70,10 @@ const DetailModal = (props) => {
 					<img className='popUpImg' src={art.image} alt={art.locationTitle} />
 				) : null}
 				{art.locationDetail != undefined ? (
-					<Typography variant='body2'>{art.locationDetail}</Typography>
+					<Stack flexDirection={'row'}>
+						<RoomIcon className='icon' />
+						<Typography variant='body2'>{art.locationDetail}</Typography>
+					</Stack>
 				) : null}
 
 				{showDetails ? (
@@ -168,6 +172,10 @@ const DetailContainer = styled(Box)(
 		@media screen and (min-width: 1200px) {
 			padding-top: 14%;
 			align-content: start;
+		}
+
+		.icon {
+			font-size: 16px;
 		}
 
 		.popUpImg {
