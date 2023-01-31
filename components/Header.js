@@ -16,7 +16,6 @@ const Header = () => {
 
 const Wrapper = styled('div')(
 	({ theme }) => `
-		// filter: drop-shadow(0px 10px 0px ${theme.palette.secondary.main});
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -63,7 +62,7 @@ const Container = styled(Box)(
 const H1 = styled(Typography)(
 	({ theme }) => `
 	margin: 0;
-	margin: 1rem 3rem;
+	margin: 1rem 2.5rem;
 	width: 80%;
 	color: ${theme.palette.text.light};
 	@media screen and (min-width: 600px) {

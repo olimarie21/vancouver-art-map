@@ -215,9 +215,7 @@ const DetailContainer = styled(Box)(
 		}
 
 		#learnMoreBtn {
-    		// font-family: ${theme.typography.fontFamily};
 			align-self: start;
-			// border-radius: 0;
 
 			@media screen and (min-width: 600px) {
 				margin: 2% 0 0 0;
