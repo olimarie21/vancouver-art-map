@@ -1,22 +1,15 @@
 import { styled } from '@mui/material/styles'
-import {
-	Button,
-	Grid,
-	IconButton,
-	SwipeableDrawer,
-	Typography,
-	Box,
-} from '@mui/material'
+import { IconButton, SwipeableDrawer, Typography, Box } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { Stack } from '@mui/system'
 import { useEffect, useState } from 'react'
 import RoomIcon from '@mui/icons-material/Room'
+import Image from 'next/image'
+import { PrimaryButton } from './Buttons'
 
 const DetailModal = (props) => {
 	const { art, setShowArt, showArt } = props
 	const [showDetails, setShowDetails] = useState(false)
-
-	console.log(art)
 
 	useEffect(() => {
 		const changeToDesktopView = () => {
@@ -67,7 +60,16 @@ const DetailModal = (props) => {
 				</Stack>
 
 				{art.image != '' ? (
-					<img className='popUpImg' src={art.image} alt={art.locationTitle} />
+					<PopUpImg>
+						<Image
+							className='popUpImg'
+							src={art.image}
+							layout={'responsive'}
+							alt={art.locationTitle}
+							height={100}
+							width={'100%'}
+						/>
+					</PopUpImg>
 				) : null}
 				{art.locationDetail != undefined ? (
 					<Stack flexDirection={'row'}>
@@ -94,13 +96,11 @@ const DetailModal = (props) => {
 					</Box>
 				) : null}
 
-				<Button
-					color='secondary'
+				<PrimaryButton
 					id='learnMoreBtn'
-					variant='contained'
 					onClick={() => setShowDetails(!showDetails)}>
 					{showDetails ? 'Hide details' : 'Show details'}
-				</Button>
+				</PrimaryButton>
 			</DetailContainer>
 		</Slider>
 	)
@@ -110,6 +110,7 @@ const Slider = styled(SwipeableDrawer)(
 	position: relative;
 	.MuiPaper-root {
 		background: transparent;
+		max-height: 100%;
 		@media screen and (min-width: 600px) {
 			width: 45%;
 			height: 95%;
@@ -134,7 +135,7 @@ const Slider = styled(SwipeableDrawer)(
 
 const Accent = styled('div')(
 	({ theme }) => `
-		height: 8rem;
+		height: 7rem;
 		background: ${theme.palette.secondary.main};
 		width: 100%;
 		clip-path: polygon(0 0, 100% 10%, 100% 100%, 0% 100%);
@@ -144,6 +145,24 @@ const Accent = styled('div')(
 			display: none;
 		}
 	`
+)
+
+const PopUpImg = styled(Box)(
+	({ theme }) => `
+		position: relative;
+		height: 10rem;
+		width: 100%;
+		max-height: 200px;
+		max-width: 100%;
+		margin-top: 4%;
+		border-bottom: 4px solid ${theme.palette.secondary.main};
+		overflow: hidden;
+
+		@media screen and (min-width: 600px) {
+			grid-row: 2 / 2;
+			margin: 0% 0 4% 0;
+			align-self: start;
+		}`
 )
 
 const DetailContainer = styled(Box)(
@@ -178,21 +197,6 @@ const DetailContainer = styled(Box)(
 			font-size: 16px;
 		}
 
-		.popUpImg {
-			height: auto;
-			max-height: 200px;
-			width: 100%;
-			margin-top: 4%;
-			object-fit: cover;
-			border-bottom: 4px solid ${theme.palette.secondary.main};
-
-			@media screen and (min-width: 600px) {
-				grid-row: 2 / 2;
-				margin: 0% 0 4% 0;
-				align-self: start;
-			}
-		}
-
 		#closeBtn {
 			position: absolute;
 			top: 4%; 
@@ -211,9 +215,9 @@ const DetailContainer = styled(Box)(
 		}
 
 		#learnMoreBtn {
-    		font-family: ${theme.typography.fontFamily};
+    		// font-family: ${theme.typography.fontFamily};
 			align-self: start;
-			border-radius: 0;
+			// border-radius: 0;
 
 			@media screen and (min-width: 600px) {
 				margin: 2% 0 0 0;
@@ -227,7 +231,7 @@ const DetailContainer = styled(Box)(
 
 		#h2 {
 			margin-bottom: 0;
-			margin-right: 2%;
+			margin-right: 10%;
 		}
 
 		#description {
@@ -237,7 +241,7 @@ const DetailContainer = styled(Box)(
 			margin-bottom: 4%;
 
 			@media screen and (min-width: 600px) {
-				max-height: 250px;
+				max-height: 14rem;
 			}
 
 			::-webkit-scrollbar {
