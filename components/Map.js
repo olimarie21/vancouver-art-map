@@ -9,6 +9,11 @@ import styles from '../styles/mapStyles'
 import axios from 'axios'
 import mapClusterStyles from '../styles/mapClusterStyles'
 import DetailModal from './DetailModal'
+import FilterListIcon from '@mui/icons-material/FilterList'
+import FilterListOffIcon from '@mui/icons-material/FilterListOff'
+import { Button } from '@mui/material'
+import styled from '@emotion/styled'
+import Filter from './Filter'
 
 const Map = () => {
 	const { isLoaded } = useJsApiLoader({
@@ -21,6 +26,8 @@ const Map = () => {
 	const [locations, setLocations] = useState([])
 	const [showArt, setShowArt] = useState(false)
 	const [artItem, setArtItem] = useState()
+	const [showFilter, setShowFilter] = useState(false)
+	const [filterItem, setFilterItem] = useState([])
 
 	const [containerStyle, setContainerStyle] = useState({
 		width: '100vw',
@@ -49,10 +56,14 @@ const Map = () => {
 	const artPopup = (art) => {
 		setArtItem(art)
 		setShowArt(true)
-		// setCenter({
-		// 	lat: art.geolocation.coordinates[1],
-		// 	lng: art.geolocation.coordinates[0],
-		// })
+	}
+
+	const filterArt = (filters, applyFilter) => {
+		axios.get(`${process.env.DB_URL}/${filters}`).then((res) => {
+			setLocations(res.data)
+		})
+
+		applyFilter ? setShowFilter(false) : null
 	}
 
 	return isLoaded ? (
@@ -112,10 +123,47 @@ const Map = () => {
 			{showArt ? (
 				<DetailModal showArt={showArt} art={artItem} setShowArt={setShowArt} />
 			) : null}
+			<CustomFilterBtn
+				onClick={() => {
+					setShowFilter(!showFilter)
+					showArt ? setShowArt(false) : null
+				}}>
+				{filterItem.length > 0 ? <FilterListIcon /> : <FilterListOffIcon />}
+			</CustomFilterBtn>
+			{showFilter ? (
+				<Filter
+					applyFilter={filterArt}
+					filterItem={filterItem}
+					setFilterItem={setFilterItem}
+				/>
+			) : null}
 		</GoogleMap>
 	) : (
 		<></>
 	)
 }
 
+const CustomFilterBtn = styled(Button)(
+	({ theme }) => `
+		position: fixed;
+		left: 2.5rem;
+		top: 10rem;
+		z-index: 100;
+		background: ${theme.palette.secondary.main};
+		border-radius: 100px;
+		width: 40px;
+		height: 40px;
+		padding: 0;
+		margin: 0;
+		min-width: 0;
+
+		&:hover {
+			background: ${theme.palette.primary.transparency};
+		}
+
+		@media screen and (min-width: 600px) {
+			left: 3rem;
+		}
+	`
+)
 export default Map
