@@ -56,6 +56,7 @@ const Map = () => {
 	const artPopup = (art) => {
 		setArtItem(art)
 		setShowArt(true)
+		setShowFilter(false)
 	}
 
 	const filterArt = (filters, applyFilter) => {
@@ -63,7 +64,9 @@ const Map = () => {
 			setLocations(res.data)
 		})
 
-		applyFilter ? setShowFilter(false) : null
+		if (window.innerWidth < 600) {
+			applyFilter ? setShowFilter(false) : null
+		}
 	}
 
 	return isLoaded ? (
