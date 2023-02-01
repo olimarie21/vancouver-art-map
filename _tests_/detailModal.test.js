@@ -2,6 +2,7 @@ import '@testing-library/jest-dom'
 import { cleanup, render, screen } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import DetailModal from '../components/DetailModal'
+import MockTheme from './utils/provideTheme'
 
 afterEach(cleanup)
 
@@ -25,6 +26,10 @@ it('loads art location details', () => {
 	}
 
 	act(() => {
-		render(<DetailModal art={fakeArtLocation} showArt={true} />)
+		render(
+			<MockTheme>
+				<DetailModal art={fakeArtLocation} showArt={true} />
+			</MockTheme>
+		)
 	})
 })
