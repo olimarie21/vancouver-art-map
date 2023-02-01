@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
-import { Checkbox, FormControlLabel, Stack, Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import { PrimaryButton, SecondaryButton } from './Buttons'
+import FilterItem from './FilterItem'
 
 const artTypes = [
 	'Sculpture',
@@ -42,18 +43,12 @@ const Filter = (props) => {
 				Filter Art
 			</Typography>
 			{artTypes.map((type) => (
-				<FormControlLabel
-					label={type}
+				<FilterItem
 					key={type}
-					control={
-						<Checkbox
-							className='filterCheckbox'
-							color={'secondary'}
-							checked={filterItem.includes(type)}
-							onChange={handleChange}
-							inputProps={{ 'aria-label': type }}
-						/>
-					}></FormControlLabel>
+					handleChange={handleChange}
+					filterItem={filterItem}
+					type={type}
+				/>
 			))}
 			<Stack flexDirection={'row'} gap={2}>
 				<PrimaryButton
