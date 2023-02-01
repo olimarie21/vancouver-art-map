@@ -170,6 +170,7 @@ const Map = () => {
 					applyFilter={filterArt}
 					filterItem={filterItem}
 					setFilterItem={setFilterItem}
+					showFilter={showFilter}
 				/>
 			) : null}
 			{userLocation &&

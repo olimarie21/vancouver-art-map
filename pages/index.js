@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import Map from '../components/Map'
 import { styled } from '@mui/material/styles'
 import { Stack } from '@mui/system'
+import Footer from '../components/Footer'
 
 export default function Home() {
 	return (
@@ -16,6 +17,7 @@ export default function Home() {
 			</Head>
 			<Header />
 			<Map />
+			<Footer />
 		</Container>
 	)
 }
