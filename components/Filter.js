@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { Stack, Typography } from '@mui/material'
 import { PrimaryButton, SecondaryButton } from './Buttons'
 import FilterItem from './FilterItem'
+import { AnimatePresence, motion } from 'framer-motion'
 
 const artTypes = [
 	'Sculpture',
@@ -22,7 +23,7 @@ const artTypes = [
 ]
 
 const Filter = (props) => {
-	const { applyFilter, filterItem, setFilterItem } = props
+	const { applyFilter, filterItem, setFilterItem, showFilter } = props
 
 	const handleChange = (event) => {
 		filterItem.includes(event.target.ariaLabel)
@@ -38,59 +39,69 @@ const Filter = (props) => {
 	}
 
 	return (
-		<FilterContainer>
-			<Typography variant='h3' mb={'.5rem'}>
-				Filter Art
-			</Typography>
-			{artTypes.map((type) => (
-				<FilterItem
-					key={type}
-					handleChange={handleChange}
-					filterItem={filterItem}
-					type={type}
-				/>
-			))}
-			<Stack flexDirection={'row'} gap={2}>
-				<PrimaryButton
-					id={'filterBtn'}
-					onClick={() => applyFilter(filterItem, true)}>
-					Apply Filter
-				</PrimaryButton>
-				<SecondaryButton
-					id={'clearFilterBtn'}
-					onClick={() => handleClearFilter()}>
-					Clear Filter
-				</SecondaryButton>
-			</Stack>
-		</FilterContainer>
+		<AnimatePresence>
+			{showFilter && (
+				<FilterContainer
+					initial={{ x: 200 }}
+					animate={{ x: 0 }}
+					exit={{ x: -200 }}>
+					<Typography variant='h3' mb={'.5rem'}>
+						Filter Art
+					</Typography>
+					{artTypes.map((type) => (
+						<FilterItem
+							key={type}
+							handleChange={handleChange}
+							filterItem={filterItem}
+							type={type}
+						/>
+					))}
+					<Stack flexDirection={'row'} gap={2}>
+						<PrimaryButton
+							id={'filterBtn'}
+							onClick={() => applyFilter(filterItem, true)}>
+							Apply Filter
+						</PrimaryButton>
+						<SecondaryButton
+							id={'clearFilterBtn'}
+							onClick={() => handleClearFilter()}>
+							Clear Filter
+						</SecondaryButton>
+					</Stack>
+				</FilterContainer>
+			)}
+		</AnimatePresence>
 	)
 }
 
-const FilterContainer = styled(Stack)(
-	({ theme }) => ` 
-        position: fixed;
-        right: 0;
-        top: 0;
-        background: ${theme.palette.primary.main};
-        max-width: 75%;
-		height: 100%;
-        padding: 9rem 1.25rem 3rem 1.25rem;
-        font-family: ${theme.typography.fontFamily};
-        color: ${theme.palette.text.light};
+const FilterContainer = styled(motion.div)`
+	position: fixed;
+	right: 0;
+	top: 0;
+	background: ${({ theme }) => theme.palette.primary.main};
+	max-width: 75%;
+	height: 100%;
+	padding: 9rem 1.25rem 3rem 1.25rem;
+	font-family: ${({ theme }) => theme.typography.fontFamily};
+	color: ${({ theme }) => theme.palette.text.light};
+	z-index: 4;
+	display: flex;
+	flex-direction: column;
 
-        .MuiCheckbox-root {
-            height: 1.7rem;
-            color: ${theme.palette.secondary.main};
-        }
+	.MuiCheckbox-root {
+		height: 1.7rem;
+		color: ${({ theme }) => theme.palette.secondary.main};
+	}
 
-        @media screen and (min-width: 400px) {
-            max-width: 300px;
-        }
+	@media screen and (min-width: 400px) {
+		max-width: 300px;
+		z-index: 0;
+	}
 
-		#filterBtn, #clearFilterBtn {
-			margin-top: 4%;
-		}
-    `
-)
+	#filterBtn,
+	#clearFilterBtn {
+		margin-top: 4%;
+	}
+`
 
 export default Filter
