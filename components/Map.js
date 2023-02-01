@@ -3,6 +3,8 @@ import {
 	useJsApiLoader,
 	Marker,
 	MarkerClusterer,
+	LatLngBounds,
+	LatLngBoundsLiteral,
 } from '@react-google-maps/api'
 import { useState, useEffect, useCallback } from 'react'
 import styles from '../styles/mapStyles'
@@ -21,13 +23,16 @@ const Map = () => {
 		googleMapsApiKey: process.env.MAPS_API_KEY,
 	})
 	const [center, setCenter] = useState({ lat: 49.277691, lng: -123.117504 })
-	const [zoom, setZoom] = useState(12)
+	const [zoom, setZoom] = useState(14)
 	const [map, setMap] = useState(null)
 	const [locations, setLocations] = useState([])
 	const [showArt, setShowArt] = useState(false)
 	const [artItem, setArtItem] = useState()
 	const [showFilter, setShowFilter] = useState(false)
 	const [filterItem, setFilterItem] = useState([])
+	const [filteredData, setFilteredData] = useState([])
+	const [userLocation, setUserLocation] = useState(null)
+	const [bounds, setBounds] = useState([])
 
 	const [containerStyle, setContainerStyle] = useState({
 		width: '100vw',
@@ -37,7 +42,11 @@ const Map = () => {
 	useEffect(() => {
 		let isMounted = true
 		axios.get(`${process.env.DB_URL}`).then((res) => {
-			isMounted ? setLocations(res.data) : null
+			if (isMounted) {
+				setLocations(res.data)
+				setFilteredData(res.data)
+			}
+			console.log('mounted')
 		})
 
 		return () => {
@@ -45,11 +54,34 @@ const Map = () => {
 		}
 	}, [])
 
+	useEffect(() => {
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				setUserLocation({
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				})
+				console.log(position)
+			},
+			(error) => console.error(error)
+		)
+	}, [])
+
 	const onLoad = useCallback(function callback(map) {
+		console.log('onLoad')
 		setMap(map)
+
+		const mapBounds = new window.google.maps.LatLngBounds(
+			new google.maps.LatLng(49.17354181847458, -123.35199344091797), // south-west corner
+			new google.maps.LatLng(49.31314301736694, -122.95612078745795) // north-east corner
+		)
+
+		setBounds(mapBounds)
+		// map.fitBounds(mapBounds)
 	}, [])
 
 	const onUnmount = useCallback(function callback(map) {
+		console.log('unmounted')
 		setMap(null)
 	}, [])
 
@@ -60,9 +92,11 @@ const Map = () => {
 	}
 
 	const filterArt = (filters, applyFilter) => {
-		axios.get(`${process.env.DB_URL}/${filters}`).then((res) => {
-			setLocations(res.data)
-		})
+		filters.length > 0
+			? setFilteredData(
+					locations.filter((location) => filters.includes(location.type))
+			  )
+			: setFilteredData(locations)
 
 		if (window.innerWidth < 600) {
 			applyFilter ? setShowFilter(false) : null
@@ -87,7 +121,7 @@ const Map = () => {
 					styles: mapClusterStyles,
 				}}>
 				{(clusterer) =>
-					locations.map((location, index) => (
+					filteredData.map((location, index) => (
 						<Marker
 							key={index}
 							position={{
@@ -140,6 +174,20 @@ const Map = () => {
 					setFilterItem={setFilterItem}
 				/>
 			) : null}
+			{userLocation &&
+				bounds.contains({
+					lat: userLocation.lat,
+					lng: userLocation.lng,
+				}) && (
+					<Marker
+						animation={google.maps.Animation.BOUNCE}
+						position={userLocation}
+						icon={{
+							url: 'https://res.cloudinary.com/scave2021/image/upload/v1675363610/userLocation.png',
+							scaledSize: new google.maps.Size(30, 35),
+						}}
+					/>
+				)}
 		</GoogleMap>
 	) : (
 		<></>

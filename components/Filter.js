@@ -33,8 +33,8 @@ const Filter = (props) => {
 	}
 
 	const handleClearFilter = () => {
-		applyFilter([])
-		setFilterItem([], false)
+		applyFilter([], false)
+		setFilterItem([])
 	}
 
 	return (
