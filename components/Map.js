@@ -3,8 +3,7 @@ import {
 	useJsApiLoader,
 	Marker,
 	MarkerClusterer,
-	LatLngBounds,
-	LatLngBoundsLiteral,
+	Circle,
 } from '@react-google-maps/api'
 import { useState, useEffect, useCallback } from 'react'
 import styles from '../styles/mapStyles'
@@ -16,6 +15,7 @@ import FilterListOffIcon from '@mui/icons-material/FilterListOff'
 import { Button } from '@mui/material'
 import styled from '@emotion/styled'
 import Filter from './Filter'
+import circleOptions from '../styles/circleOptions'
 
 const Map = () => {
 	const { isLoaded } = useJsApiLoader({
@@ -61,7 +61,6 @@ const Map = () => {
 					lat: position.coords.latitude,
 					lng: position.coords.longitude,
 				})
-				console.log(position)
 			},
 			(error) => console.error(error)
 		)
@@ -77,7 +76,6 @@ const Map = () => {
 		)
 
 		setBounds(mapBounds)
-		// map.fitBounds(mapBounds)
 	}, [])
 
 	const onUnmount = useCallback(function callback(map) {
@@ -179,14 +177,16 @@ const Map = () => {
 					lat: userLocation.lat,
 					lng: userLocation.lng,
 				}) && (
-					<Marker
-						animation={google.maps.Animation.BOUNCE}
-						position={userLocation}
-						icon={{
-							url: 'https://res.cloudinary.com/scave2021/image/upload/v1675363610/userLocation.png',
-							scaledSize: new google.maps.Size(30, 35),
-						}}
-					/>
+					<>
+						<Marker
+							position={userLocation}
+							icon={{
+								url: 'https://res.cloudinary.com/scave2021/image/upload/v1675371311/purpleCircle.png',
+								scaledSize: new google.maps.Size(12, 12),
+							}}
+						/>
+						<Circle center={userLocation} options={circleOptions} />
+					</>
 				)}
 		</GoogleMap>
 	) : (
