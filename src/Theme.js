@@ -25,19 +25,27 @@ const theme = createTheme({
 })
 
 theme.typography.h1 = {
-	fontSize: '2rem',
 	fontWeight: '800',
-	lineHeight: '37px',
+	fontSize: '1.75rem',
+	'@media (min-width:600px)': {
+		fontSize: '2rem',
+	},
 }
 
 theme.typography.h2 = {
-	fontSize: '1.4rem',
+	fontSize: '1.2rem',
 	fontWeight: '700',
+	'@media (min-width:600px)': {
+		fontSize: '1.4rem',
+	},
 }
 
 theme.typography.h3 = {
-	fontSize: '1.2rem',
+	fontSize: '1.0rem',
 	fontWeight: '600',
+	'@media (min-width:600px)': {
+		fontSize: '1.2rem',
+	},
 }
 
 theme.typography.h4 = {
@@ -57,7 +65,8 @@ theme.typography.body2 = {
 }
 
 theme.typography.button = {
-	fontSize: '.95rem',
+	fontSize: '.85rem',
 	fontWeight: '600',
 }
+
 export default theme
