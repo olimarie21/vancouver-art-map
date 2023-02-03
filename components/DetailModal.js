@@ -71,29 +71,30 @@ const DetailModal = (props) => {
 						/>
 					</PopUpImg>
 				) : null}
-				{art.locationDetail != undefined ? (
-					<Stack flexDirection={'row'}>
-						<RoomIcon className='icon' />
-						<Typography variant='body2'>{art.locationDetail}</Typography>
-					</Stack>
-				) : null}
-
 				{showDetails ? (
-					<Box display={'grid'} rowGap={'.5rem'}>
-						<Typography variant='h4'>
-							<strong>Artist(s): </strong>
-							{art.artists.join(', ')}
-						</Typography>
+					<>
+						{art.locationDetail != undefined ? (
+							<Stack flexDirection={'row'}>
+								<RoomIcon className='icon' />
+								<Typography variant='body2'>{art.locationDetail}</Typography>
+							</Stack>
+						) : null}
+						<Box display={'grid'} rowGap={'.5rem'}>
+							<Typography variant='h4'>
+								<strong>Artist(s): </strong>
+								{art.artists.join(', ')}
+							</Typography>
 
-						<Typography variant='h4'>
-							<strong>Primary Material: </strong>
-							{art.primaryMaterial || 'Unknown'}
-						</Typography>
+							<Typography variant='h4'>
+								<strong>Primary Material: </strong>
+								{art.primaryMaterial || 'Unknown'}
+							</Typography>
 
-						<Typography id='description' variant='body1'>
-							{decodeHTML(art.artDescription)}
-						</Typography>
-					</Box>
+							<Typography id='description' variant='body1'>
+								{decodeHTML(art.artDescription)}
+							</Typography>
+						</Box>
+					</>
 				) : null}
 
 				<PrimaryButton
@@ -155,7 +156,7 @@ const PopUpImg = styled(Box)(
 		max-height: 200px;
 		max-width: 100%;
 		margin-top: 4%;
-		border-bottom: 4px solid ${theme.palette.secondary.main};
+		border-bottom: 1.5px solid ${theme.palette.secondary.main};
 		overflow: hidden;
 
 		@media screen and (min-width: 600px) {
@@ -194,7 +195,7 @@ const DetailContainer = styled(Box)(
 		}
 
 		.icon {
-			font-size: 16px;
+			font-size: 1rem;
 		}
 
 		#closeBtn {
