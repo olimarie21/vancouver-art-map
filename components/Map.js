@@ -36,7 +36,7 @@ const Map = () => {
 
 	const [containerStyle, setContainerStyle] = useState({
 		width: '100vw',
-		height: '100vh',
+		height: '95vh',
 	})
 
 	useEffect(() => {
