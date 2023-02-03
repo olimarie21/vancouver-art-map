@@ -6,7 +6,7 @@ const Footer = () => {
 	return (
 		<>
 			<Accent />
-			<Container>
+			<Container data-testid='footer'>
 				<Typography className='footerContent' variant='body1'>
 					<StyledATag
 						target='_blank'
@@ -49,8 +49,12 @@ const Container = styled(Stack)(
         
         .footerContent {
             padding: 0 3rem;
-            font-size: 10px;
+            font-size: .6rem;
         }
+
+		@media screen and (min-width: 600px) {
+			z-index: 3000;
+		}
     `
 )
 
