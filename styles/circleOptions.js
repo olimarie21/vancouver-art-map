@@ -1,10 +1,10 @@
 import theme from '../src/Theme'
 
 const circleOptions = {
-	strokeColor: theme.palette.secondary.light,
+	strokeColor: theme.palette.primary.light,
 	strokeOpacity: 0.25,
 	strokeWeight: 1,
-	fillColor: theme.palette.secondary.main,
+	fillColor: theme.palette.primary.main,
 	fillOpacity: 0.25,
 	clickable: false,
 	draggable: false,

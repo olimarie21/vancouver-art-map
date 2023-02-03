@@ -182,8 +182,8 @@ const Map = () => {
 						<Marker
 							position={userLocation}
 							icon={{
-								url: 'https://res.cloudinary.com/scave2021/image/upload/v1675371311/purpleCircle.png',
-								scaledSize: new google.maps.Size(12, 12),
+								path: google.maps.SymbolPath.CIRCLE,
+								scale: 4,
 							}}
 						/>
 						<Circle center={userLocation} options={circleOptions} />
