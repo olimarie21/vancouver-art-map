@@ -8,13 +8,29 @@ const Footer = () => {
 			<Accent />
 			<Container>
 				<Typography className='footerContent' variant='body1'>
-					&copy; Olivia Underdah, 2023
+					<StyledATag
+						target='_blank'
+						rel='noreferrer'
+						className='link'
+						href={'https://oliviaunderdah.com/'}>
+						&copy; Olivia Underdah, 2023
+					</StyledATag>
 				</Typography>
 			</Container>
 		</>
 	)
 }
 
+const StyledATag = styled('a')(
+	({ theme }) => `
+	text-decoration: none;
+	color: ${theme.palette.text.light};
+
+	&:hover {
+		color: ${theme.palette.secondary.main};
+	}
+	`
+)
 const Container = styled(Stack)(
 	({ theme }) => `
         flex-direction: row;
@@ -22,21 +38,25 @@ const Container = styled(Stack)(
         color: ${theme.palette.text.light};
         font-family: ${theme.typography.fontFamily};
       	clip-path: polygon(0 14%, 100% 0, 100% 100%, 0% 100%);
-        position: relative;
         justify-content: end;
-        z-index: 2;
+        z-index: 1;
+		height: 5%;
+		align-items: center;
+		position: fixed;
+		bottom: 0;
+		right: 0;
+		width: 100%;
         
         .footerContent {
-            padding: 1rem 3rem;
+            padding: 0 3rem;
             font-size: 10px;
         }
-
     `
 )
 
 const Accent = styled('div')(
 	({ theme }) => `
-		height: 3rem;
+		height: 5%;
 		background: ${theme.palette.secondary.main};
 		width: 100%;
 		clip-path: polygon(0 0, 100% 7%, 100% 100%, 0% 100%);
