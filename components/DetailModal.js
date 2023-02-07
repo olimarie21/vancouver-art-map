@@ -6,10 +6,19 @@ import { useEffect, useState } from 'react'
 import RoomIcon from '@mui/icons-material/Room'
 import Image from 'next/image'
 import { PrimaryButton } from './Buttons'
+import decodeHTML from '../utils/decodeHTML'
+import getDistance from '../utils/calculateDistance'
+import InfoRoundedIcon from '@mui/icons-material/InfoRounded'
 
 const DetailModal = (props) => {
-	const { art, setShowArt, showArt } = props
+	const { art, setShowArt, showArt, userLocation } = props
 	const [showDetails, setShowDetails] = useState(false)
+	const [locationTip, setShowLocationTip] = useState(false)
+
+	const artLocation = {
+		lat: art.geolocation.coordinates[1],
+		lng: art.geolocation.coordinates[0],
+	}
 
 	useEffect(() => {
 		const changeToDesktopView = () => {
@@ -23,12 +32,6 @@ const DetailModal = (props) => {
 		changeToDesktopView()
 		window.addEventListener('resize', changeToDesktopView)
 	}, [])
-
-	const decodeHTML = (txt) => {
-		const txtContainer = document.createElement('textarea')
-		txtContainer.innerHTML = txt
-		return txtContainer.value
-	}
 
 	return (
 		<Slider
@@ -56,8 +59,30 @@ const DetailModal = (props) => {
 					<Typography id='h2' variant='h2'>
 						{art.locationTitle}
 					</Typography>
-					<Typography variant='h4'>{art.type}</Typography>
+					{userLocation && (
+						<Stack flexDirection={'row'} gap={'1%'} alignItems={'center'}>
+							{art.locationDetail != undefined && (
+								<IconButton
+									id='infoBtn'
+									color='secondary'
+									aria-label='location info'
+									onClick={() => setShowLocationTip(!locationTip)}>
+									<InfoRoundedIcon />
+								</IconButton>
+							)}
+							<Typography variant='body2'>
+								{getDistance(userLocation, artLocation)} km to location
+							</Typography>
+						</Stack>
+					)}
 				</Stack>
+				{art.locationDetail != undefined && locationTip ? (
+					<LocationDetailContainer>
+						<RoomIcon className='icon' />
+						<Typography variant='body2'>{art.locationDetail}</Typography>
+					</LocationDetailContainer>
+				) : null}
+				<Typography variant='h4'>{art.type}</Typography>
 
 				{art.image != '' ? (
 					<PopUpImg>
@@ -73,19 +98,13 @@ const DetailModal = (props) => {
 				) : null}
 				{showDetails ? (
 					<>
-						{art.locationDetail != undefined ? (
-							<Stack flexDirection={'row'}>
-								<RoomIcon className='icon' />
-								<Typography variant='body2'>{art.locationDetail}</Typography>
-							</Stack>
-						) : null}
-						<Box display={'grid'} rowGap={'.5rem'}>
-							<Typography variant='h4'>
+						<Box display={'grid'} rowGap={'.35rem'}>
+							<Typography variant='body1'>
 								<strong>Artist(s): </strong>
 								{art.artists.join(', ')}
 							</Typography>
 
-							<Typography variant='h4'>
+							<Typography variant='body1'>
 								<strong>Primary Material: </strong>
 								{art.primaryMaterial || 'Unknown'}
 							</Typography>
@@ -148,6 +167,13 @@ const Accent = styled('div')(
 	`
 )
 
+const LocationDetailContainer = styled(Stack)(
+	({ theme }) => `
+	flex-direction: row;
+	border: 1.5px solid ${theme.palette.secondary.main};
+	padding: .35rem;
+	`
+)
 const PopUpImg = styled(Box)(
 	({ theme }) => `
 		position: relative;
@@ -155,7 +181,6 @@ const PopUpImg = styled(Box)(
 		width: 100%;
 		max-height: 200px;
 		max-width: 100%;
-		margin-top: 4%;
 		border-bottom: 1.5px solid ${theme.palette.secondary.main};
 		overflow: hidden;
 
@@ -173,7 +198,7 @@ const DetailContainer = styled(Box)(
 		grid-template-rows: auto;
 		clip-path: polygon(0 7%, 100% 0, 100% 100%, 0% 100%);
 		position: relative;
-		padding: 3rem 1.5rem 1.5rem 1.5rem;
+		padding: 3rem 1.5rem 1rem 1.5rem;
 		margin-bottom: 2%;
 		height: 100%;
 		width: 100%;
@@ -215,8 +240,17 @@ const DetailContainer = styled(Box)(
 			}
 		}
 
+		#infoBtn {
+			margin: 0;
+			padding: 0;
+
+			svg {
+				font-size: 20px;
+			}
+		}
 		#learnMoreBtn {
 			align-self: start;
+			margin: 0;
 
 			@media screen and (min-width: 600px) {
 				margin: 2% 0 0 0;
