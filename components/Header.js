@@ -27,7 +27,7 @@ const Wrapper = styled('div')(
 )
 const Accent = styled('div')(
 	({ theme }) => `
-		height: 8rem;
+		height: 7rem;
 		background: ${theme.palette.secondary.main};
 		width: 100%;
 		clip-path: polygon(0 0, 100% 0, 100% 100%, 0 78%);
@@ -38,6 +38,7 @@ const Accent = styled('div')(
 		
 		@media screen and (min-width: 600px) {
 			z-index: 10000;
+			height: 8rem;
 		}
 	`
 )
@@ -46,23 +47,27 @@ const Container = styled(Box)(
 	({ theme }) => `
 	margin: 0;
 	padding: 0;
-	height: 8rem;
+	height: 7rem;
 	width: 100vw;
     max-width: 100vw;
 	background: ${theme.palette.primary.main};
 	display: flex;
 	justify-content: start;
-	align-items: start;
+	align-items: center;
     font-family: ${theme.typography.fontFamily};
 	overflow: hidden;
 	clip-path: polygon(0 0, 100% 0%, 100% 75%, 0 100%);
+
+	@media screen and (min-width: 600px) {
+		height: 8rem;
+	}
 `
 )
 
 const H1 = styled(Typography)(
 	({ theme }) => `
 	margin: 0;
-	margin: 1rem 2.5rem;
+	margin: .5rem 2.5rem 1rem 2.5rem;
 	width: 80%;
 	color: ${theme.palette.text.light};
 	@media screen and (min-width: 600px) {
