@@ -39,33 +39,6 @@ const Map = () => {
 		height: '95vh',
 	})
 
-	useEffect(() => {
-		let isMounted = true
-		axios.get(`${process.env.DB_URL}`).then((res) => {
-			if (isMounted) {
-				setLocations(res.data)
-				setFilteredData(res.data)
-			}
-			console.log('mounted')
-		})
-
-		return () => {
-			isMounted = false
-		}
-	}, [])
-
-	useEffect(() => {
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
-				setUserLocation({
-					lat: position.coords.latitude,
-					lng: position.coords.longitude,
-				})
-			},
-			(error) => console.error(error)
-		)
-	}, [])
-
 	const onLoad = useCallback(function callback(map) {
 		console.log('onLoad')
 		setMap(map)
@@ -100,6 +73,33 @@ const Map = () => {
 			applyFilter ? setShowFilter(false) : null
 		}
 	}
+
+	useEffect(() => {
+		let isMounted = true
+		axios.get(`${process.env.DB_URL}`).then((res) => {
+			if (isMounted) {
+				setLocations(res.data)
+				setFilteredData(res.data)
+			}
+			console.log('mounted')
+		})
+
+		return () => {
+			isMounted = false
+		}
+	}, [])
+
+	useEffect(() => {
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				setUserLocation({
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				})
+			},
+			(error) => console.error(error)
+		)
+	}, [])
 
 	return isLoaded ? (
 		<GoogleMap
@@ -156,7 +156,12 @@ const Map = () => {
 				}
 			</MarkerClusterer>
 			{showArt ? (
-				<DetailModal showArt={showArt} art={artItem} setShowArt={setShowArt} />
+				<DetailModal
+					userLocation={userLocation}
+					showArt={showArt}
+					art={artItem}
+					setShowArt={setShowArt}
+				/>
 			) : null}
 			<CustomFilterBtn
 				onClick={() => {
@@ -218,4 +223,5 @@ const CustomFilterBtn = styled(Button)(
 		}
 	`
 )
+
 export default Map
