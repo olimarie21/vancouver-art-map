@@ -23,7 +23,7 @@ const Map = () => {
 		googleMapsApiKey: process.env.MAPS_API_KEY,
 	})
 	const [center, setCenter] = useState({ lat: 49.277691, lng: -123.117504 })
-	const [zoom, setZoom] = useState(14)
+	const [zoom, setZoom] = useState(16)
 	const [map, setMap] = useState(null)
 	const [locations, setLocations] = useState([])
 	const [showArt, setShowArt] = useState(false)
@@ -93,6 +93,11 @@ const Map = () => {
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
 				setUserLocation({
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				})
+
+				setCenter({
 					lat: position.coords.latitude,
 					lng: position.coords.longitude,
 				})

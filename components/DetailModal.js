@@ -100,7 +100,9 @@ const DetailModal = (props) => {
 					<>
 						<Box display={'grid'} rowGap={'.35rem'}>
 							<Typography variant='body1'>
-								<strong>Artist(s): </strong>
+								<strong>
+									{art.artists.length > 1 ? 'Artists: ' : 'Artist: '}
+								</strong>
 								{art.artists.join(', ')}
 							</Typography>
 

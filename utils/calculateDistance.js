@@ -18,7 +18,6 @@ const getDistance = (userLocation, location) => {
 	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 	const distance = earthRadius * c
 
-	console.log(`You are ${distance.toFixed(1)} kilometers from the location.`)
 	return distance.toFixed(1)
 }
 
