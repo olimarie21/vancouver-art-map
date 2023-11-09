@@ -39,6 +39,7 @@ const Accent = styled('div')(
 		@media screen and (min-width: 600px) {
 			z-index: 10000;
 			height: 8rem;
+			width: 44.5vw;
 		}
 	`
 )
@@ -60,6 +61,7 @@ const Container = styled(Box)(
 
 	@media screen and (min-width: 600px) {
 		height: 8rem;
+		width: 42vw;
 	}
 `
 )
@@ -71,7 +73,7 @@ const H1 = styled(Typography)(
 	width: 80%;
 	color: ${theme.palette.text.light};
 	@media screen and (min-width: 600px) {
-		margin: 2.5rem 3rem;
+		margin: 1.5rem 3rem 2.5rem 3rem;
 	}
 `
 )

@@ -1,5 +1,5 @@
 const clusterIcon = {
-	url: 'https://res.cloudinary.com/scave2021/image/upload/v1673306251/art-icon_cluster_frwdp0.png',
+	url: 'https://res.cloudinary.com/scave2021/image/upload/v1699504433/art-icon_cluster.png',
 	width: 40,
 	height: 40,
 	fontWeight: 'bold',

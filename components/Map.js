@@ -139,7 +139,7 @@ const Map = () => {
 											scaledSize: new google.maps.Size(46, 46),
 									  }
 									: {
-											url: 'https://res.cloudinary.com/scave2021/image/upload/v1673306251/art_icon_bg_ruzuqa.png',
+											url: 'https://res.cloudinary.com/scave2021/image/upload/v1699504361/art_icon_bg.png',
 											scaledSize: new google.maps.Size(38, 38),
 									  }
 							}

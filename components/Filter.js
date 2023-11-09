@@ -44,7 +44,7 @@ const Filter = (props) => {
 				<FilterContainer
 					initial={{ x: 200 }}
 					animate={{ x: 0 }}
-					exit={{ x: -200 }}>
+					exit={{ x: 200 }}>
 					<Typography variant='h3' mb={'.5rem'}>
 						Filter Art
 					</Typography>
