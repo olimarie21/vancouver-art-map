@@ -38,13 +38,13 @@ const Container = styled(Stack)(
         color: ${theme.palette.text.light};
         font-family: ${theme.typography.fontFamily};
       	clip-path: polygon(0 14%, 100% 0, 100% 100%, 0% 100%);
-        justify-content: end;
+        justify-content: start;
         z-index: 1;
 		height: 5%;
 		align-items: center;
 		position: fixed;
 		bottom: 0;
-		right: 0;
+		left: 0;
 		width: 100%;
         
         .footerContent {
@@ -54,6 +54,8 @@ const Container = styled(Stack)(
 
 		@media screen and (min-width: 600px) {
 			z-index: 3000;
+			width: 43.5vw;
+			max-width: 570px;
 		}
     `
 )
@@ -66,6 +68,12 @@ const Accent = styled('div')(
 		clip-path: polygon(0 0, 100% 7%, 100% 100%, 0% 100%);
 		position: fixed;
         bottom: 0;
+
+		@media screen and (min-width: 600px) {
+			width: 44.5vw;
+			left: 0;
+			max-width: 580px;
+		}
 	`
 )
 export default Footer

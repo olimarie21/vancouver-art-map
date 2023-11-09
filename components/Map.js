@@ -36,7 +36,7 @@ const Map = () => {
 
 	const [containerStyle, setContainerStyle] = useState({
 		width: '100vw',
-		height: '95vh',
+		height: '100vh',
 	})
 
 	const onLoad = useCallback(function callback(map) {

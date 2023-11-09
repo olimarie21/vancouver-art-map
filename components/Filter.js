@@ -46,7 +46,7 @@ const Filter = (props) => {
 					animate={{ x: 0 }}
 					exit={{ x: 200 }}>
 					<Typography variant='h3' mb={'.5rem'}>
-						Filter Art
+						Category Filter
 					</Typography>
 					{artTypes.map((type) => (
 						<FilterItem
@@ -60,12 +60,12 @@ const Filter = (props) => {
 						<PrimaryButton
 							id={'filterBtn'}
 							onClick={() => applyFilter(filterItem, true)}>
-							Apply Filter
+							Apply
 						</PrimaryButton>
 						<SecondaryButton
 							id={'clearFilterBtn'}
 							onClick={() => handleClearFilter()}>
-							Clear Filter
+							Clear
 						</SecondaryButton>
 					</Stack>
 				</FilterContainer>
