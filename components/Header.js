@@ -40,6 +40,7 @@ const Accent = styled('div')(
 			z-index: 10000;
 			height: 8rem;
 			width: 44.5vw;
+			max-width: 580px;
 		}
 	`
 )
@@ -62,6 +63,7 @@ const Container = styled(Box)(
 	@media screen and (min-width: 600px) {
 		height: 8rem;
 		width: 42vw;
+		max-width: 550px;
 	}
 `
 )
